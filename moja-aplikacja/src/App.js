@@ -3,17 +3,24 @@ import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
+import ToggleButton from '@material-ui/lab/ToggleButton';
+import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
+import FormatAlignRightIcon from '@material-ui/icons/FormatAlignRight';
+import FormatAlignLeftIcon from '@material-ui/icons/FormatAlignLeft';
+
+
+import countries from '/home/janko/Dokumenty/PROGRAMY/React_web/moja-aplikacja/src/countries';
+
 
 
 const App = () => {
-  const [count_1, setCount_1] = useState(3);
-  const [count_2, setCount_2] = useState(8);
+  const [alignment, setAlignment] = useState('left');
   const [items, setItems] = useState([]);
   
-  useEffect(() => {
-    document.title = `Naciśnięto ${count_1} oraz ${count_2} razy`;
-  });
-  
+  // useEffect(() => {
+  //   document.title = `Naciśnięto ${count_1} oraz ${count_2} razy`;
+  // });
+          /// Czy mogę te useEffecty połączyć w jeden dla czystości kody?
   useEffect(() => {
     const url = "http://climatedataapi.worldbank.org/climateweb/rest/v1/country/mavg/pr/1920/1939/ITA"
     const fetchData = async () => {
@@ -25,19 +32,27 @@ const App = () => {
       } catch (error) {
           console.log("error", error);
       }
-  };
+    };
   
     fetchData();
-  },[]);
+  },
+  []);
+
+  const handleAlignment = (event, newAlignment) => {
+    if (newAlignment !== null) {
+      setAlignment(newAlignment);
+    }
+  };
 
   const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
+      justifyContent: "center",
     },
     paper: {
       padding: theme.spacing(2),
       textAlign: 'center',
-      color: "primary",
+      color: theme.palette.text.secondary,
     },
   }));
 
@@ -46,48 +61,40 @@ const App = () => {
   
     return (
       <div className={classes.root}>
-        <h1> 
-          Italy monthly average precipitation (rainfall and assumed water equivalent), in millimeters 
-        </h1> 
-        {
-				items.map((item) => (
-          <ol key = { item.id } >
-            monthVals: { item.monthVals },
-            {/* .map((Val, idx) => <p key = idx>{Val}</p> }}, */},
-            from_year: { item.fromYear }
-            </ol>
-          ))
-        }
+      <Grid container spacing={3}>
+        
+        <Grid item xs={12}>
+          <Paper className={classes.paper}>xs=6</Paper>
 
-        <Grid container spacing={3}>
-          <Grid item xs={12}>
-            <Paper className={classes.paper}>Naciśnięto {count_1} razy</Paper>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Paper className={classes.paper}>
-              <Button className={classes.paper} variant="contained" color="primary" onClick={() => setCount_2(count_2 + 1)}>
-                Drugi <br />
-                {count_2}
-              </Button>
-            </Paper>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Button className={classes.paper} variant="contained" color="primary" onClick={() => setCount_1(count_1 + 1)}>
-              pierwszy <br />{count_1}
-            </Button>
-          </Grid>
-          <Grid item xs={6} sm={3}>
-            <Paper className={classes.paper}> </Paper>
-          </Grid>
-          <Grid item xs={6} sm={3}>
-            <Paper className={classes.paper}>Naciśnięto {count_2} razy</Paper>
-          </Grid>
         </Grid>
-      </div>
-      
+        <Grid item xs={6}>
+          <ToggleButtonGroup
+            value={alignment}
+            exclusive
+            onChange={handleAlignment}
+            aria-label="text alignment"
+          >
+            <ToggleButton value="left" aria-label="left aligned">
+              <FormatAlignLeftIcon />
+            </ToggleButton>
+            <ToggleButton value="right" aria-label="right aligned">
+              <FormatAlignRightIcon />
+            </ToggleButton>
+          </ToggleButtonGroup>  
+        </Grid>
+        <Grid item xs={6}>
+          <Paper className={classes.paper}>xs=6</Paper>
+        </Grid>
+        <Grid item xs={6}>
+          <Paper className={classes.paper}>xs=6</Paper>
+        </Grid>
+        <Grid item xs={6}>
+          <Paper className={classes.paper}>xs=6</Paper>
+        </Grid>
+      </Grid>
+    </div>      
     );
   };
 }
 
 export default App;
-

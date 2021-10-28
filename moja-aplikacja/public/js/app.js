@@ -1,40 +1,37 @@
-import React from "react";
-import './App.css';
+import React from 'react';
+import FormatAlignLeftIcon from '@material-ui/icons/FormatAlignLeft';
+import FormatAlignCenterIcon from '@material-ui/icons/FormatAlignCenter';
+import FormatAlignRightIcon from '@material-ui/icons/FormatAlignRight';
+import FormatAlignJustifyIcon from '@material-ui/icons/FormatAlignJustify';
+import ToggleButton from '@material-ui/lab/ToggleButton';
+import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 
-class App extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			items: [],
-		};
-	}
-  
-	componentDidMount() {
-		fetch(
-      "http://climatedataapi.worldbank.org/climateweb/rest/v1/country/mavg/pr/1920/1939/ITA")
-			.then((res) => res.json())
-			.then((json) => {
-				this.setState({
-					items: json
-				});
-			})
-	}
-	render() {
-		const { items } = this.state;
-		return (
-		<div className = "App">
-			<h1> Italy monthly average precipitation (rainfall and assumed water equivalent), in millimeters </h1> {
-				items.map((item) => (
-				<ol key = { item.id } >
-					monthVals: { item.monthVals },
-          {/* .map((Val, idx) => <p key = idx>{Val}</p> }}, */},
-          from_year: { item.fromYear }
-					</ol>
-				))
-			}
-		</div>
-	);
-}
-}
+export default function ToggleButtons() {
+  const [alignment, setAlignment] = React.useState('left');
 
-export default App;
+  const handleAlignment = (event, newAlignment) => {
+    setAlignment(newAlignment);
+  };
+
+  return (
+    <ToggleButtonGroup
+      value={alignment}
+      exclusive
+      onChange={handleAlignment}
+      aria-label="text alignment"
+    >
+      <ToggleButton value="left" aria-label="left aligned">
+        <FormatAlignLeftIcon />
+      </ToggleButton>
+      <ToggleButton value="center" aria-label="centered">
+        <FormatAlignCenterIcon />
+      </ToggleButton>
+      <ToggleButton value="right" aria-label="right aligned">
+        <FormatAlignRightIcon />
+      </ToggleButton>
+      <ToggleButton value="justify" aria-label="justified" disabled>
+        <FormatAlignJustifyIcon />
+      </ToggleButton>
+    </ToggleButtonGroup>
+  );
+}
