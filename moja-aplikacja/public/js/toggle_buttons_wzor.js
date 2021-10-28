@@ -19,13 +19,13 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ToggleButtonNotEmpty() {
   const [alignment, setAlignment] = React.useState('left');
-  const [formats, setFormats] = React.useState(() => ['phone']);
+//   const [formats, setFormats] = React.useState(() => ['phone']);
 
-  const handleFormat = (event, newFormats) => {
-    if (newFormats.length) {
-      setFormats(newFormats);
-    }
-  };
+//   const handleFormat = (event, newFormats) => {
+//     if (newFormats.length) {
+//       setFormats(newFormats);
+//     }
+//   };
 
   const handleAlignment = (event, newAlignment) => {
     if (newAlignment !== null) {
