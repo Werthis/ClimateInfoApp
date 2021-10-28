@@ -10,8 +10,7 @@ import FormatAlignLeftIcon from '@material-ui/icons/FormatAlignLeft';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 
-
-import countries from '/home/janko/Dokumenty/PROGRAMY/React_web/moja-aplikacja/src/countries';
+import Weather_data from './weather_data';
 
 
 
@@ -19,11 +18,14 @@ const App = () => {
   const [variable, setVariable] = useState('left');
   const [type, setType] = useState('left');
   const [items, setItems] = useState([]);
-  
+  const [value, setValue] = useState(Weather_data.period_variables[0]);
+  const [inputValue, setInputValue] = useState('');
+
   // useEffect(() => {
   //   document.title = `Naciśnięto ${count_1} oraz ${count_2} razy`;
   // });
           /// Czy mogę te useEffecty połączyć w jeden dla czystości kody?
+
   useEffect(() => {
     const url = "http://climatedataapi.worldbank.org/climateweb/rest/v1/country/mavg/pr/1920/1939/ITA"
     const fetchData = async () => {
@@ -90,7 +92,7 @@ const App = () => {
         
         <Grid item xs={12}>
           <Paper className={classes.paper}>
-            xs=6
+            Climate
           </Paper>
         </Grid>
         <Grid item xs={6}>
@@ -100,10 +102,12 @@ const App = () => {
             onChange={handleVariable}
             aria-label="text variable"
           >
-            <ToggleButton value="left" aria-label="left aligned">
+            <ToggleButton value="per" aria-label="1">
+                Precipitation
               <FormatAlignLeftIcon />
             </ToggleButton>
-            <ToggleButton value="right" aria-label="right aligned">
+            <ToggleButton value="tas" aria-label="right aligned">
+                Temperature
               <FormatAlignRightIcon />
             </ToggleButton>
           </ToggleButtonGroup>  
@@ -112,7 +116,7 @@ const App = () => {
           <Autocomplete
             id="country-select-demo"
             style={{ width: 300 }}
-            options={countries}
+            options={Weather_data.countries}
             classes={{
               option: classes.option,
             }}
@@ -153,7 +157,22 @@ const App = () => {
           </ToggleButtonGroup>  
         </Grid>
         <Grid item xs={6}>
-          <Paper className={classes.paper}>xs=6</Paper>
+          <div>
+            <Autocomplete
+              value={value}
+              onChange={(event, newValue) => {
+                setValue(newValue);
+              }}
+              inputValue={inputValue}
+              onInputChange={(event, newInputValue) => {
+                setInputValue(newInputValue);
+              }}
+              id="controllable-states-demo"
+              options={Weather_data.period_variables}
+              style={{ width: 300 }}
+              renderInput={(params) => <TextField {...params} label="Controllable" variant="outlined" />}
+            />
+          </div>
         </Grid>
       </Grid>
     </div>

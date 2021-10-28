@@ -13,8 +13,9 @@ import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 
 
 const App = () => {
-    const [alignment, setAlignment] = React.useState('left');
-    const [items, setItems] = useState([]);
+  const [count_1, setCount_1] = useState(3);
+  const [count_2, setCount_2] = useState(8);
+  const [items, setItems] = useState([]);
   
   useEffect(() => {
     document.title = `Naciśnięto ${count_1} oraz ${count_2} razy`;
@@ -48,12 +49,6 @@ const App = () => {
     },
   }));
 
-  const handleAlignment = (event, newAlignment) => {
-    if (newAlignment !== null) {
-      setAlignment(newAlignment);
-    }
-  };
-
  {
   const classes = useStyles();
   
@@ -63,12 +58,7 @@ const App = () => {
 
         <Grid container spacing={3}>
           <Grid item xs={12}>
-            <ToggleButtonGroup
-                value={alignment}
-                exclusive
-                onChange={handleAlignment}
-                aria-label="text alignment"
-            >          
+            <Paper className={classes.paper}>Naciśnięto {count_1} razy</Paper>
           </Grid>
           <Grid item xs={12} sm={6}>
             <Paper className={classes.paper}>

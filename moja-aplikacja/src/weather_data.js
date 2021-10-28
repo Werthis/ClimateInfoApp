@@ -1,3 +1,16 @@
+const period_variables = [
+  '1920 - 1939',
+  '1940 - 1959',
+  '1960 - 1979',
+  '1980 - 1999',
+  '2020 - 2039',
+  '2040 - 2059',
+  '2060 - 2079',
+  '2080 - 2099'
+];
+
+const variables = [];
+
 const countries = [
     { code: 'AD', label: 'Andorra', phone: '376' },
     { code: 'AE', label: 'United Arab Emirates', phone: '971' },
@@ -248,5 +261,7 @@ const countries = [
     { code: 'ZM', label: 'Zambia', phone: '260' },
     { code: 'ZW', label: 'Zimbabwe', phone: '263' },
   ];
+  
+  const Weather_data = {countries, period_variables, variables}
 
-export default countries;
+export default Weather_data;
