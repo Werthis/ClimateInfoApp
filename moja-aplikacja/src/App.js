@@ -7,6 +7,13 @@ import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
+import TodayIcon from '@material-ui/icons/Today';
+import CachedIcon from '@material-ui/icons/Cached';
+import Icon from '@material-ui/core/Icon';
+
+
+import rain_logo from './rain.png'
+import temp_logo from './temp.png'
 
 import Weather_data from './weather_data';
 
@@ -22,6 +29,7 @@ const App = () => {
   // useEffect(() => {
   //   document.title = `Naciśnięto ${count_1} oraz ${count_2} razy`;
   // });
+
           /// Czy mogę te useEffecty połączyć w jeden dla czystości kody?
 
   useEffect(() => {
@@ -72,17 +80,19 @@ const App = () => {
   const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
-      justifyContent: "center",
+      justifyContent: "space-evenly",
+      fontSize: 50
     },
     paper: {
       padding: theme.spacing(2),
       textAlign: 'center',
       color: theme.palette.text.secondary,
+      background: '#fffff0'
     },
     option: {
       fontSize: 15,
       '& > span': {
-        marginRight: 10,
+        marginRight: 100,
         fontSize: 18,
       },
     },
@@ -94,33 +104,27 @@ const App = () => {
     return (
       <div className={classes.root}>
       <Grid container spacing={3}>
-        
+        <style>{'body { background-color: #ffffe0 ; }'}</style>
         <Grid item sm={12}>
           <Paper className={classes.paper}>
-            Climate
+            Climate data
           </Paper>
         </Grid>
-        <Grid className={classes.root}>
+        <Grid item sm={12} container spacing={0} className={classes.root}>
           <ToggleButtonGroup
-            
             value={variable}
             exclusive
             onChange={handleVariable}
             aria-label="text variable"      // ??????
           >
             <ToggleButton value="left" aria-label="left aligned">
-                
-              
+              <img src={rain_logo} alt="rain_logo" width= '36' height= '36' />
               Precipitation
             </ToggleButton>
             <ToggleButton value="right" aria-label="right aligned">
-                Temperature
-              
+              <img src={temp_logo} alt="temp_logo" width= '36' height= '36' />              Temperature
             </ToggleButton>
           </ToggleButtonGroup>  
-        </Grid>
-
-        <Grid className={classes.root}>
           <Autocomplete
             id="country-select"
             style={{ width: 300 }}
@@ -141,7 +145,7 @@ const App = () => {
             renderInput={(params) => (
               <TextField
                 {...params}
-                label="Choose a country"
+                label="Select a country"
                 variant="outlined"
                 inputProps={{
                   ...params.inputProps,
@@ -152,7 +156,7 @@ const App = () => {
           />        
         </Grid>
 
-        <Grid className={classes.root}>
+        <Grid item sm={12} container spacing={55} className={classes.root}>
           <ToggleButtonGroup
             value={type}
             exclusive
@@ -160,15 +164,15 @@ const App = () => {
             aria-label="text type"
           >
             <ToggleButton value="left" aria-label="left aligned">
-                Monthly average
+              <TodayIcon />
+              Monthly average
             </ToggleButton>
             <ToggleButton value="right" aria-label="right aligned">
+              <CachedIcon />
                 Annual average
             </ToggleButton>
           </ToggleButtonGroup>  
-        </Grid>
 
-        <Grid className={classes.root}>
           <div>
             <Autocomplete
               value={value}
