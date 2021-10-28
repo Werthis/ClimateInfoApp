@@ -5,8 +5,6 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
-import FormatAlignRightIcon from '@material-ui/icons/FormatAlignRight';
-import FormatAlignLeftIcon from '@material-ui/icons/FormatAlignLeft';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 
@@ -18,7 +16,7 @@ const App = () => {
   const [variable, setVariable] = useState('left');
   const [type, setType] = useState('left');
   const [items, setItems] = useState([]);
-  const [value, setValue] = useState(Weather_data.period_variables[0]);
+  const [value, setValue] = useState('');
   const [inputValue, setInputValue] = useState('');
 
   // useEffect(() => {
@@ -61,8 +59,15 @@ const App = () => {
           .toUpperCase()
           .replace(/./g, (char) => String.fromCodePoint(char.charCodeAt(0) + 127397))
       : isoCode;
-  }
+  };
   
+  const maping_countries = Weather_data.countries.map((option) => {
+    const firstLetter = option.label[0].toUpperCase();
+    return {
+      firstLetter: /[0-9]/.test(firstLetter) ? '0-9' : firstLetter,
+      ...option,
+    };
+  });
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -90,38 +95,43 @@ const App = () => {
       <div className={classes.root}>
       <Grid container spacing={3}>
         
-        <Grid item xs={12}>
+        <Grid item sm={12}>
           <Paper className={classes.paper}>
             Climate
           </Paper>
         </Grid>
-        <Grid item xs={6}>
+        <Grid className={classes.root}>
           <ToggleButtonGroup
+            
             value={variable}
             exclusive
             onChange={handleVariable}
-            aria-label="text variable"
+            aria-label="text variable"      // ??????
           >
-            <ToggleButton value="per" aria-label="1">
-                Precipitation
-              <FormatAlignLeftIcon />
+            <ToggleButton value="left" aria-label="left aligned">
+                
+              
+              Precipitation
             </ToggleButton>
-            <ToggleButton value="tas" aria-label="right aligned">
+            <ToggleButton value="right" aria-label="right aligned">
                 Temperature
-              <FormatAlignRightIcon />
+              
             </ToggleButton>
           </ToggleButtonGroup>  
         </Grid>
-        <Grid item xs={6}>
+
+        <Grid className={classes.root}>
           <Autocomplete
-            id="country-select-demo"
+            id="country-select"
             style={{ width: 300 }}
-            options={Weather_data.countries}
-            classes={{
+            options={maping_countries.sort((a, b) => -b.firstLetter.localeCompare(a.firstLetter))}
+            groupBy={(option) => option.firstLetter}
+            getOptionLabel={(option) => option.label}
+                  classes={{
               option: classes.option,
             }}
             autoHighlight
-            getOptionLabel={(option) => option.label}
+            // getOptionLabel={(option) => option.label}
             renderOption={(option) => (
               <React.Fragment>
                 <span>{countryToFlag(option.code)}</span>
@@ -141,7 +151,8 @@ const App = () => {
             )}
           />        
         </Grid>
-        <Grid item xs={6}>
+
+        <Grid className={classes.root}>
           <ToggleButtonGroup
             value={type}
             exclusive
@@ -149,14 +160,15 @@ const App = () => {
             aria-label="text type"
           >
             <ToggleButton value="left" aria-label="left aligned">
-              <FormatAlignLeftIcon />
+                Monthly average
             </ToggleButton>
             <ToggleButton value="right" aria-label="right aligned">
-              <FormatAlignRightIcon />
+                Annual average
             </ToggleButton>
           </ToggleButtonGroup>  
         </Grid>
-        <Grid item xs={6}>
+
+        <Grid className={classes.root}>
           <div>
             <Autocomplete
               value={value}
@@ -170,7 +182,7 @@ const App = () => {
               id="controllable-states-demo"
               options={Weather_data.period_variables}
               style={{ width: 300 }}
-              renderInput={(params) => <TextField {...params} label="Controllable" variant="outlined" />}
+              renderInput={(params) => <TextField {...params} label="Choose a period" variant="outlined" />}
             />
           </div>
         </Grid>
