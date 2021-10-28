@@ -9,8 +9,6 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 import TodayIcon from '@material-ui/icons/Today';
 import CachedIcon from '@material-ui/icons/Cached';
-import Icon from '@material-ui/core/Icon';
-
 
 import rain_logo from './rain.png'
 import temp_logo from './temp.png'
@@ -31,6 +29,7 @@ const App = () => {
   // });
 
           /// Czy mogę te useEffecty połączyć w jeden dla czystości kody?
+  const getUrl = "http://climatedataapi.worldbank.org/climateweb/rest/v1/{country}/{mavg}/{pr}/{1920}/{1939}/{ITA}"
 
   useEffect(() => {
     const url = "http://climatedataapi.worldbank.org/climateweb/rest/v1/country/mavg/pr/1920/1939/ITA"
@@ -89,6 +88,12 @@ const App = () => {
       color: theme.palette.text.secondary,
       background: '#fffff0'
     },
+    button: {
+      background: '#fffff0',
+    },
+    select: {
+      background: '#fffff0',
+    },
     option: {
       fontSize: 15,
       '& > span': {
@@ -117,15 +122,16 @@ const App = () => {
             onChange={handleVariable}
             aria-label="text variable"      // ??????
           >
-            <ToggleButton value="left" aria-label="left aligned">
+            <ToggleButton value="left" aria-label="left aligned" className={classes.button}>
               <img src={rain_logo} alt="rain_logo" width= '36' height= '36' />
               Precipitation
             </ToggleButton>
-            <ToggleButton value="right" aria-label="right aligned">
+            <ToggleButton value="right" aria-label="right aligned" className={classes.button}>
               <img src={temp_logo} alt="temp_logo" width= '36' height= '36' />              Temperature
             </ToggleButton>
           </ToggleButtonGroup>  
           <Autocomplete
+            className={classes.select}
             id="country-select"
             style={{ width: 300 }}
             options={maping_countries.sort((a, b) => -b.firstLetter.localeCompare(a.firstLetter))}
@@ -135,7 +141,6 @@ const App = () => {
               option: classes.option,
             }}
             autoHighlight
-            // getOptionLabel={(option) => option.label}
             renderOption={(option) => (
               <React.Fragment>
                 <span>{countryToFlag(option.code)}</span>
@@ -158,6 +163,7 @@ const App = () => {
 
         <Grid item sm={12} container spacing={55} className={classes.root}>
           <ToggleButtonGroup
+            className={classes.button}
             value={type}
             exclusive
             onChange={handleType}
@@ -175,6 +181,7 @@ const App = () => {
 
           <div>
             <Autocomplete
+              className={classes.select}
               value={value}
               onChange={(event, newValue) => {
                 setValue(newValue);
