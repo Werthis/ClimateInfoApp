@@ -29,7 +29,9 @@ const App = () => {
   // });
 
           /// Czy mogę te useEffecty połączyć w jeden dla czystości kody?
-  const getUrl = "http://climatedataapi.worldbank.org/climateweb/rest/v1/{country}/{mavg}/{pr}/{1920}/{1939}/{ITA}"
+
+  const getUrl = 'http://climatedataapi.worldbank.org/climateweb/rest/v1/country'+ {type} +'/'+ {variable} +'/'+ 1920 +'/'+ 1939 +'/ITA'
+  console.log(getUrl);
 
   useEffect(() => {
     const url = "http://climatedataapi.worldbank.org/climateweb/rest/v1/country/mavg/pr/1920/1939/ITA"
@@ -163,17 +165,16 @@ const App = () => {
 
         <Grid item sm={12} container spacing={55} className={classes.root}>
           <ToggleButtonGroup
-            className={classes.button}
             value={type}
             exclusive
             onChange={handleType}
             aria-label="text type"
           >
-            <ToggleButton value="left" aria-label="left aligned">
+            <ToggleButton value="left" aria-label="left aligned" className={classes.button}>
               <TodayIcon />
-              Monthly average
+                Monthly average
             </ToggleButton>
-            <ToggleButton value="right" aria-label="right aligned">
+            <ToggleButton value="right" aria-label="right aligned" className={classes.button}>
               <CachedIcon />
                 Annual average
             </ToggleButton>
