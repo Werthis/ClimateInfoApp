@@ -1,4 +1,4 @@
-const period_variables = [
+const period = [
   '1920 - 1939',
   '1940 - 1959',
   '1960 - 1979',
@@ -9,7 +9,7 @@ const period_variables = [
   '2080 - 2099'
 ];
 
-const variables = [];
+// const variables = [];
 
 const countries = [
     { code: 'AD', label: 'Andorra', phone: '376' },
@@ -262,6 +262,6 @@ const countries = [
     { code: 'ZW', label: 'Zimbabwe', phone: '263' },
   ];
   
-  const Weather_data = {countries, period_variables, variables}
+  const allAppData = {countries, period}
 
-export default Weather_data;
+export default allAppData;
