@@ -15,49 +15,62 @@ import tempLogo from "./temp.png";
 
 import allAppData from "./allAppData";
 
-// wstawić value do autocoplete country
-// poprawić setValue
-// zamienić left na wartość 
-// zmapować kod kraju iso
+// zrobić plik json od Stasia
+// wypisać:
+// model:
+// wartości (zaokrąglić dane 2 miejsca po przecinku):
+// 1. ....
+// zrobić żeby było ładne
+
+const ModelResults = (props) => {
+  return (
+    <>
+      {props.from} <br /> Model: {JSON.stringify(props.item.gcm)} <br />
+      {JSON.stringify(props.item.monthVals)}
+    </>
+  );
+};
 
 const App = () => {
-  const [precipitationTemp, setPrecipitationTemp] = useState("left");
-  const [monthlyOrAnnual, setMonthlyOrAnnual] = useState("left");
-  // const [items, setItems] = useState([]);
-  const [choosePeriod, setValue] = useState(allAppData.period[0]);
-  const [inputValue, setInputValue] = useState("");
+  const [precipitationTemp, setPrecipitationTemp] = useState("pr");
+  const [monthlyOrAnnual, setMonthlyOrAnnual] = useState("mavg");
+  const [items, setItems] = useState([]);
+  const [period, setPeriod] = useState(allAppData.period[0]);
+  const [inputPeriod, setInputPeriod] = useState("");
+  const [country, setCountry] = useState(allAppData.mapingCountries[0]);
+  const [inputCountry, setInputCountry] = useState("");
 
-  let [startYear, endYear] = choosePeriod.split(" - ");
+  let [startYear, endYear] = period.split(" - ");
 
-  const getUrl = `http://climatedataapi.worldbank.org/climateweb/rest/v1/country/${monthlyOrAnnual}/${precipitationTemp}/${startYear}/${endYear}/ITA`;
-  console.log(getUrl);
-
-  useEffect(() => {
-    console.log(
-      "monthlyOrAnnual_changed",
-      monthlyOrAnnual,
-      "variable_changed",
-      precipitationTemp
-    );
-    console.log("choosePeriod changed", choosePeriod, startYear, endYear);
-  }, [monthlyOrAnnual, precipitationTemp, choosePeriod, startYear, endYear]);
+  // { code: "AD", label: "Andorra", phone: "376" }
 
   // useEffect(() => {
-  //   const url = "http://climatedataapi.worldbank.org/climateweb/rest/v1/country/mavg/pr/1920/1939/ITA"
-  //   const fetchData = async () => {
-  //     try {
-  //         const response = await fetch(url);
-  //         const json = await response.json();
-  //         console.log(json);
-  //         setItems(json);
-  //     } catch (error) {
-  //         console.log("error", error);
-  //     }
-  //   };
+  //   console.log(
+  //     // "monthlyOrAnnual_changed",
+  //     // monthlyOrAnnual,
+  //     // "period_changed",
+  //     // precipitationTemp,
+  //     "country_changed",
+  //     country
+  //   );
+  //   // console.log("choosePeriod changed", period, startYear, endYear);
+  // }, [monthlyOrAnnual, precipitationTemp, period, startYear, endYear, country]);
 
-  //   fetchData();
-  // },
-  // []);
+  useEffect(() => {
+    const getUrl = `http://climatedataapi.worldbank.org/climateweb/rest/v1/country/${monthlyOrAnnual}/${precipitationTemp}/${startYear}/${endYear}/${country.code}`;
+    const fetchData = async () => {
+      try {
+        const response = await fetch(getUrl);
+        const json = await response.json();
+        console.log(json);
+        setItems(json);
+      } catch (error) {
+        console.log("error", error);
+      }
+    };
+    console.log(getUrl);
+    fetchData();
+  }, [monthlyOrAnnual, precipitationTemp, period, startYear, endYear, country]); // jeśli te wartości z tej tablicy się zmienią to ten useEffect się wywoła
 
   const handlePrecipitationTemp = (event, newPrecipitationTemp) => {
     if (newPrecipitationTemp !== null) {
@@ -80,14 +93,6 @@ const App = () => {
           )
       : isoCode;
   };
-
-  const mapingCountries = allAppData.countries.map((option) => {
-    const firstLetter = option.label[0].toUpperCase();
-    return {
-      firstLetter: /[0-9]/.test(firstLetter) ? "0-9" : firstLetter,
-      ...option,
-    };
-  });
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -134,7 +139,7 @@ const App = () => {
               aria-label="text variable" // ??????
             >
               <ToggleButton
-                value="left"
+                value="pr"
                 aria-label="left aligned"
                 className={classes.button}
               >
@@ -142,7 +147,7 @@ const App = () => {
                 Precipitation
               </ToggleButton>
               <ToggleButton
-                value="right"
+                value="tas"
                 aria-label="right aligned"
                 className={classes.button}
               >
@@ -153,11 +158,17 @@ const App = () => {
 
             <Autocomplete
               className={classes.select}
+              value={country}
+              onChange={(event, newCountry) => {
+                setCountry(newCountry);
+              }}
+              inputValue={inputCountry}
+              onInputChange={(event, newInputCountry) => {
+                setInputCountry(newInputCountry);
+              }}
               id="country-select"
               style={{ width: 300 }}
-              options={mapingCountries.sort(
-                (a, b) => -b.firstLetter.localeCompare(a.firstLetter)
-              )}
+              options={allAppData.mapingCountries}
               groupBy={(option) => option.firstLetter}
               classes={{
                 option: classes.option,
@@ -192,7 +203,7 @@ const App = () => {
               aria-label="text monthlyOrAnnual"
             >
               <ToggleButton
-                value="left"
+                value="mavg"
                 aria-label="left aligned"
                 className={classes.button}
               >
@@ -200,7 +211,7 @@ const App = () => {
                 Monthly average
               </ToggleButton>
               <ToggleButton
-                value="right"
+                value="annualavg"
                 aria-label="right aligned"
                 className={classes.button}
               >
@@ -211,13 +222,13 @@ const App = () => {
 
             <Autocomplete
               className={classes.select}
-              value={choosePeriod}
-              onChange={(event, newValue) => {
-                setValue(newValue);
+              value={period}
+              onChange={(event, newPeriod) => {
+                setPeriod(newPeriod);
               }}
-              inputValue={inputValue}
-              onInputChange={(event, newInputValue) => {
-                setInputValue(newInputValue);
+              inputValue={inputPeriod}
+              onInputChange={(event, newInputPeriod) => {
+                setInputPeriod(newInputPeriod);
               }}
               id="controllable-states-demo"
               options={allAppData.period}
@@ -232,6 +243,10 @@ const App = () => {
             />
           </Grid>
         </Grid>
+
+        {items.map((item) => (
+          <ModelResults key={item.gcm} item={item} />
+        ))}
       </div>
     );
   }
