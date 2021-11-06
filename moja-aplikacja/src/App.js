@@ -9,6 +9,7 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import TextField from "@material-ui/core/TextField";
 import TodayIcon from "@material-ui/icons/Today";
 import CachedIcon from "@material-ui/icons/Cached";
+import { DataGrid } from "@material-ui/data-grid";
 
 import rainLogo from "./rain.png";
 import tempLogo from "./temp.png";
@@ -23,10 +24,75 @@ import allAppData from "./allAppData";
 // zrobić żeby było ładne
 
 const ModelResults = (props) => {
+  const listOfMonths = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  const firstRow = ["Model"];
+  const monthOrAnnualValuesArray = [props.item.gcm];
+  const rows = [];
+  if (props.item.monthVals != null) {
+    rows.push(firstRow);
+    for (var i = 0; i < props.item.monthVals.length; i++) {
+      monthOrAnnualValuesArray.push(+props.item.monthVals[i].toFixed(2));
+    }
+    for (var x = 0; x < props.item.monthVals.length; x++) {
+      firstRow.push(listOfMonths[x]);
+    }
+    for (var z = 0; z < monthOrAnnualValuesArray.length; z++) {
+      rows.push(monthOrAnnualValuesArray);
+    }
+
+    console.log(monthOrAnnualValuesArray);
+  } else {
+    for (var j = 0; j < props.item.annualData.length; j++) {
+      monthOrAnnualValuesArray.push(+props.item.annualData[j].toFixed(2));
+    }
+    firstRow.push('Annual Average');
+
+    console.log(monthOrAnnualValuesArray);
+    console.log(firstRow);
+  }
+
+  const useStyles = makeStyles((theme) => ({
+    root: {
+      // flexGrow: 1,
+      justifyContent: "space-evenly",
+      fontSize: 15,
+      direction: "row",
+    },
+    paper: {
+      height: 140,
+      width: 100,
+    },
+    control: {
+      padding: theme.spacing(2),
+    },
+  }));
+  // const
+  const classes = useStyles();
   return (
+    // monthValuesArray,
+
     <>
-      {props.from} <br /> Model: {JSON.stringify(props.item.gcm)} <br />
-      {JSON.stringify(props.item.monthVals)}
+      <Paper elevation={3} direction="row">
+        {firstRow.map((txt) => (
+          <>{txt} | </>
+        ))}<br />
+        {monthOrAnnualValuesArray.map((txt) => (
+          <>{txt} | </>
+        ))}{" "}
+      </Paper>
     </>
   );
 };
@@ -41,20 +107,6 @@ const App = () => {
   const [inputCountry, setInputCountry] = useState("");
 
   let [startYear, endYear] = period.split(" - ");
-
-  // { code: "AD", label: "Andorra", phone: "376" }
-
-  // useEffect(() => {
-  //   console.log(
-  //     // "monthlyOrAnnual_changed",
-  //     // monthlyOrAnnual,
-  //     // "period_changed",
-  //     // precipitationTemp,
-  //     "country_changed",
-  //     country
-  //   );
-  //   // console.log("choosePeriod changed", period, startYear, endYear);
-  // }, [monthlyOrAnnual, precipitationTemp, period, startYear, endYear, country]);
 
   useEffect(() => {
     const getUrl = `http://climatedataapi.worldbank.org/climateweb/rest/v1/country/${monthlyOrAnnual}/${precipitationTemp}/${startYear}/${endYear}/${country.code}`;
@@ -93,6 +145,8 @@ const App = () => {
           )
       : isoCode;
   };
+
+  const allMonthsValues = [];
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -243,9 +297,11 @@ const App = () => {
             />
           </Grid>
         </Grid>
-
         {items.map((item) => (
-          <ModelResults key={item.gcm} item={item} />
+          <Grid container direction="row" spacing={0}>
+            <ModelResults key={item.gcm} item={item} />
+          </Grid>
+          // allMonthsValues.push(ModelResults.monthValuesArray)
         ))}
       </div>
     );
