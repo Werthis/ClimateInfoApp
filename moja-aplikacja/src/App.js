@@ -38,7 +38,7 @@ const ModelResults = (props) => {
     "November",
     "December",
   ];
-  const firstRow = ["Model"];
+  const firstRow = ["Model type"];
   const monthOrAnnualValuesArray = [props.item.gcm];
   const rows = [];
   if (props.item.monthVals != null) {
@@ -58,7 +58,7 @@ const ModelResults = (props) => {
     for (var j = 0; j < props.item.annualData.length; j++) {
       monthOrAnnualValuesArray.push(+props.item.annualData[j].toFixed(2));
     }
-    firstRow.push('Annual Average');
+    firstRow.push("Annual Average");
 
     console.log(monthOrAnnualValuesArray);
     console.log(firstRow);
@@ -68,12 +68,13 @@ const ModelResults = (props) => {
     root: {
       // flexGrow: 1,
       justifyContent: "space-evenly",
-      fontSize: 15,
+      fontSize: 16,
       direction: "row",
     },
     paper: {
       height: 140,
       width: 100,
+      fontSize: 15,
     },
     control: {
       padding: theme.spacing(2),
@@ -85,14 +86,17 @@ const ModelResults = (props) => {
     // monthValuesArray,
 
     <>
-      <Paper elevation={3} direction="row">
-        {firstRow.map((txt) => (
-          <>{txt} | </>
-        ))}<br />
-        {monthOrAnnualValuesArray.map((txt) => (
-          <>{txt} | </>
-        ))}{" "}
-      </Paper>
+      <Grid>
+        <Paper elevation={3} direction="row" className={classes.root}>
+          {firstRow.map((txt) => (
+            <>{txt} | </>
+          ))}
+          <br />
+          {monthOrAnnualValuesArray.map((txt) => (
+            <>{txt} | </>
+          ))}{" "}
+        </Paper>
+      </Grid>
     </>
   );
 };
@@ -297,12 +301,14 @@ const App = () => {
             />
           </Grid>
         </Grid>
-        {items.map((item) => (
-          <Grid container direction="row" spacing={0}>
-            <ModelResults key={item.gcm} item={item} />
-          </Grid>
-          // allMonthsValues.push(ModelResults.monthValuesArray)
-        ))}
+        <Grid alignItems="center">
+          {items.map((item) => (
+            <Grid container direction="row" spacing={0}>
+              <ModelResults key={item.gcm} item={item} />
+            </Grid>
+            // allMonthsValues.push(ModelResults.monthValuesArray)
+          ))}
+        </Grid>
       </div>
     );
   }
