@@ -9,7 +9,7 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import TextField from "@material-ui/core/TextField";
 import TodayIcon from "@material-ui/icons/Today";
 import CachedIcon from "@material-ui/icons/Cached";
-// import { DataGrid } from "@material-ui/data-grid";
+import { DataGrid } from "@material-ui/data-grid";
 
 import rainLogo from "./rain.png";
 import tempLogo from "./temp.png";
@@ -38,32 +38,32 @@ const ModelResults = (props) => {
     "November",
     "December",
   ];
-  const listOfModels = [];
-  const [rowDict, setRowDict] = useState({});
-
   const firstRow = ["Model type"];
+  const monthOrAnnualValuesArray = [props.item.gcm];
   const rows = [];
-  // const rowDict = [];
-  // console.log("hello");
-  // console.log(props.items);
-  props.items.map((Object) => {
-    listOfModels.push(Object.gcm);
-    console.log(Object);
-    rows.push(Object.monthVals);
-    return rows;
-  });
-  console.log(rows);
-  rows.map((item) => {
-    for (var i = 0; i < item.length; i++) {
-      console.log(item[i], listOfMonths[i]);
+  if (props.item.monthVals != null) {
+    rows.push(firstRow);
+    for (var i = 0; i < props.item.monthVals.length; i++) {
+      monthOrAnnualValuesArray.push(+props.item.monthVals[i].toFixed(2));
     }
-    console.log("-----------------------------------");
-  });
-  console.log(listOfModels);
+    for (var x = 0; x < props.item.monthVals.length; x++) {
+      firstRow.push(listOfMonths[x]);
+    }
+    for (var z = 0; z < monthOrAnnualValuesArray.length; z++) {
+      rows.push(monthOrAnnualValuesArray);
+    }
 
-  for (var i = 0; i < rows.length; i++) {
-    for (var j = 0; j < listOfMonths.length; j++) {}
+    console.log(monthOrAnnualValuesArray);
+  } else {
+    for (var j = 0; j < props.item.annualData.length; j++) {
+      monthOrAnnualValuesArray.push(+props.item.annualData[j].toFixed(2));
+    }
+    firstRow.push("Annual Average");
+
+    console.log(monthOrAnnualValuesArray);
+    console.log(firstRow);
   }
+  console.log(rows);
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -87,9 +87,15 @@ const ModelResults = (props) => {
     // monthValuesArray,
 
     <>
-      <Grid container>
+      <Grid>
         <Paper elevation={3} direction="row" className={classes.root}>
-          lol
+          {firstRow.map((txt) => (
+            <>{txt} | </>
+          ))}
+          <br />
+          {monthOrAnnualValuesArray.map((txt) => (
+            <>{txt} | </>
+          ))}{" "}
         </Paper>
       </Grid>
     </>
@@ -296,10 +302,13 @@ const App = () => {
             />
           </Grid>
         </Grid>
-        <Grid container alignItems="center">
-          <Grid container direction="row" spacing={0}>
-            <ModelResults key={items.gcm} items={items} />
-          </Grid>
+        <Grid alignItems="center">
+          {items.map((item) => (
+            <Grid container direction="row" spacing={0}>
+              <ModelResults key={item.gcm} item={item} />
+            </Grid>
+            // allMonthsValues.push(ModelResults.monthValuesArray)
+          ))}
         </Grid>
       </div>
     );
