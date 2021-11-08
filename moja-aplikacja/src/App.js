@@ -16,29 +16,13 @@ import tempLogo from "./temp.png";
 
 import allAppData from "./allAppData";
 
-// zrobić plik json od Stasia
-// wypisać:
-// model:
-// wartości (zaokrąglić dane 2 miejsca po przecinku):
-// 1. ....
-// zrobić żeby było ładne
+// zrobić uniwersalne też dal annual
+// poprawić czcionkę select country, choose period i tabeli
+// zrobić zaokrąglenie do 2 miejsca po przecinku
+// .toFixed(2)
+// popraw listę iso_3
 
 const ModelResults = (props) => {
-  const listOfMonths = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-
   const list_bccr_bcm2_0 = [];
   const list_cccma_cgcm3_1 = [];
   const list_cnrm_cm3 = [];
@@ -56,9 +40,9 @@ const ModelResults = (props) => {
   const list_ukmo_hadgem1 = [];
 
   const listOfModels = [];
-  const listaPomocnicza1 = [];
+  // const listaPomocnicza1 = [];
   const listaPomocnicza2 = [];
-  const columns = [{ field: "month", headerName: "Month", width: 150 }];
+  const columns = [{ field: "month", headerName: "Model", width: 105 }];
   const row = [];
 
   // const rows = [];
@@ -66,28 +50,46 @@ const ModelResults = (props) => {
 
   props.items.map((Object) => {
     listOfModels.push(Object.gcm);
-    rows.push(Object.monthVals);
+    if (Object.monthVals != null) {
+      rows.push(Object.monthVals);
+    } else {
+      rows.push(Object.annualData);
+    }
 
     return rows;
   });
-  console.log("rows!!", rows);
+
+  const listOfMonths = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  const annualWord = "Annual";
+  const monthsOrAnnual = listOfMonths;
+  // if (rows[0].length === 1) {
+  //   monthsOrAnnual = annualWord;
+  // }
+
+  console.log("................", props.items.monthVals);
   console.log("1st ROW!!", rows[0]);
   for (let i = 0; i < rows.length; i++) {
     columns.push({
       field: listOfModels[i],
       headerName: listOfModels[i],
-      width: 150,
+      width: 130,
       editable: true,
     });
   }
   console.log("------------------------");
-  // for (var i = 0; i < rows.length; i++) {
-  //   listaPomocnicza1.push({});
-  //   for (var j = 0; j < rows[i].length; j++) {
-  //     listaPomocnicza2.push({listOfModels[i], listOfMonths[j]: rows[i][j]});
-  //     console.log(listOfModels[i], listOfMonths[j], rows[i][j]);
-  //   }
-  // }
   console.log("------------------------");
   console.log(listaPomocnicza2);
   console.log("------------------------");
@@ -97,81 +99,85 @@ const ModelResults = (props) => {
   console.log("row_pierwszy", row_pierwszy);
 
   for (let j = 0; j < rows.length; j++) {
-    for (let i = 0; i < listOfMonths.length; i++) {
+    for (let i = 0; i < monthsOrAnnual.length; i++) {
       list_bccr_bcm2_0.push(rows[j][i]);
     }
   }
   for (let j = 1; j < rows.length; j++) {
-    for (let i = 0; i < listOfMonths.length; i++) {
+    for (let i = 0; i < monthsOrAnnual.length; i++) {
       list_cccma_cgcm3_1.push(rows[j][i]);
     }
   }
   for (let j = 2; j < rows.length; j++) {
-    for (let i = 0; i < listOfMonths.length; i++) {
+    for (let i = 0; i < monthsOrAnnual.length; i++) {
       list_cnrm_cm3.push(rows[j][i]);
     }
   }
   for (let j = 3; j < rows.length; j++) {
-    for (let i = 0; i < listOfMonths.length; i++) {
+    for (let i = 0; i < monthsOrAnnual.length; i++) {
       list_csiro_mk3_5.push(rows[j][i]);
     }
   }
   for (let j = 4; j < rows.length; j++) {
-    for (let i = 0; i < listOfMonths.length; i++) {
+    for (let i = 0; i < monthsOrAnnual.length; i++) {
       list_gfdl_cm2_0.push(rows[j][i]);
     }
   }
   for (let j = 5; j < rows.length; j++) {
-    for (let i = 0; i < listOfMonths.length; i++) {
+    for (let i = 0; i < monthsOrAnnual.length; i++) {
       list_gfdl_cm2_1.push(rows[j][i]);
     }
   }
   for (let j = 6; j < rows.length; j++) {
-    for (let i = 0; i < listOfMonths.length; i++) {
+    for (let i = 0; i < monthsOrAnnual.length; i++) {
       list_ingv_echam4.push(rows[j][i]);
     }
   }
   for (let j = 7; j < rows.length; j++) {
-    for (let i = 0; i < listOfMonths.length; i++) {
+    for (let i = 0; i < monthsOrAnnual.length; i++) {
       list_inmcm3_0.push(rows[j][i]);
     }
   }
   for (let j = 8; j < rows.length; j++) {
-    for (let i = 0; i < listOfMonths.length; i++) {
+    for (let i = 0; i < monthsOrAnnual.length; i++) {
       list_ipsl_cm4.push(rows[j][i]);
     }
   }
   for (let j = 9; j < rows.length; j++) {
-    for (let i = 0; i < listOfMonths.length; i++) {
+    for (let i = 0; i < monthsOrAnnual.length; i++) {
       list_miroc3_2_medres.push(rows[j][i]);
     }
   }
   for (let j = 10; j < rows.length; j++) {
-    for (let i = 0; i < listOfMonths.length; i++) {
+    for (let i = 0; i < monthsOrAnnual.length; i++) {
       list_miub_echo_g.push(rows[j][i]);
     }
   }
   for (let j = 11; j < rows.length; j++) {
-    for (let i = 0; i < listOfMonths.length; i++) {
+    for (let i = 0; i < monthsOrAnnual.length; i++) {
       list_mpi_echam5.push(rows[j][i]);
     }
   }
   for (let j = 12; j < rows.length; j++) {
-    for (let i = 0; i < listOfMonths.length; i++) {
+    for (let i = 0; i < monthsOrAnnual.length; i++) {
       list_mri_cgcm2_3_2a.push(rows[j][i]);
     }
   }
   for (let j = 13; j < rows.length; j++) {
-    for (let i = 0; i < listOfMonths.length; i++) {
+    for (let i = 0; i < monthsOrAnnual.length; i++) {
       list_ukmo_hadcm3.push(rows[j][i]);
     }
   }
   for (let j = 14; j < rows.length; j++) {
-    for (let i = 0; i < listOfMonths.length; i++) {
+    for (let i = 0; i < monthsOrAnnual.length; i++) {
       list_ukmo_hadgem1.push(rows[j][i]);
     }
   }
+  // if (row_pierwszy.length === 1) {
+  //   monthsOrAnnual = annualWord;
+  // }
 
+  ;
   // rows.map((item) => {
   //   for (var i = 0; i < item.length; i++) {
   //     console.log(item[i], listOfMonths[i]);
@@ -181,10 +187,10 @@ const ModelResults = (props) => {
   // map(item)
   //  for i in item.lengfht:
 
-  for (let i = 0; i < listOfMonths.length; i++) {
+  for (let i = 0; i < monthsOrAnnual.length; i++) {
     row.push({
       id: i,
-      month: listOfMonths[i],
+      month: monthsOrAnnual[i],
       bccr_bcm2_0: list_bccr_bcm2_0[i],
       cccma_cgcm3_1: list_cccma_cgcm3_1[i],
       cnrm_cm3: list_cnrm_cm3[i],
