@@ -60,18 +60,18 @@ const ModelResults = (props) => {
   const columns = [{ field: "month", headerName: "Month", width: 150 }];
   const row = [];
 
-  const rowsLists = [];
+  // const rows = [];
   const rows = [];
-
 
   props.items.map((Object) => {
     listOfModels.push(Object.gcm);
-    rowsLists.push(Object.monthVals);
-    return rowsLists;
+    rows.push(Object.monthVals);
+
+    return rows;
   });
-  console.log("rowsLists!!", rowsLists);
-  console.log("1st ROW!!", rowsLists[0]);
-  for (let i = 0; i < rowsLists.length; i++) {
+  console.log("rows!!", rows);
+  console.log("1st ROW!!", rows[0]);
+  for (let i = 0; i < rows.length; i++) {
     columns.push({
       field: listOfModels[i],
       headerName: listOfModels[i],
@@ -79,13 +79,11 @@ const ModelResults = (props) => {
       editable: true,
     });
   }
- 
 
-  rowsLists.map((item) => {
-    rows.push(item);
-    return rows;
-  });
+  const row_pierwszy = rows[0];
+  for (let i = 0; i < rows.length; i++) {}
 
+  console.log("row_pierwszy", row_pierwszy);
 
   list_bccr_bcm2_0.push(rows[0]);
   console.log("lista bcc", list_bccr_bcm2_0);
@@ -142,6 +140,9 @@ const ModelResults = (props) => {
   const useStyles = makeStyles((theme) => ({
     root: {
       // flexGrow: 1,
+      background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+      border: 4,
+      borderRadius: 3,
       justifyContent: "space-evenly",
       fontSize: 16,
       direction: "row",
@@ -162,14 +163,24 @@ const ModelResults = (props) => {
 
     <>
       <div style={{ height: 400, width: "100%" }}>
-        <DataGrid
-          rows={row}
-          columns={columns}
-          autoHeight="true"
-          // pageSize={12}
-          // checkboxSelection
-          disableSelectionOnClick
-        />
+        <Grid container>
+          <DataGrid
+            item="true"
+            className={classes.root}
+            rows={row}
+            columns={columns}
+            autoHeight="true"
+            disableColumnFilter="true"
+            disableColumnMenu="true"
+            disableColumnSelector="true"
+            disableDensitySelector="true"
+            disableExtendRowFullWidth="true"
+            disableSelectionOnClick="true"
+            // pageSize={12}
+            // checkboxSelection
+            // disableSelectionOnClick
+          />
+        </Grid>
       </div>
     </>
   );

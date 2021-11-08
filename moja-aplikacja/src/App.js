@@ -56,7 +56,8 @@ const ModelResults = (props) => {
   const list_ukmo_hadgem1 = [];
 
   const listOfModels = [];
-  const listaPomocnicza = [];
+  const listaPomocnicza1 = [];
+  const listaPomocnicza2 = [];
   const columns = [{ field: "month", headerName: "Month", width: 150 }];
   const row = [];
 
@@ -79,36 +80,107 @@ const ModelResults = (props) => {
       editable: true,
     });
   }
-
+  console.log("------------------------");
+  // for (var i = 0; i < rows.length; i++) {
+  //   listaPomocnicza1.push({});
+  //   for (var j = 0; j < rows[i].length; j++) {
+  //     listaPomocnicza2.push({listOfModels[i], listOfMonths[j]: rows[i][j]});
+  //     console.log(listOfModels[i], listOfMonths[j], rows[i][j]);
+  //   }
+  // }
+  console.log("------------------------");
+  console.log(listaPomocnicza2);
+  console.log("------------------------");
   const row_pierwszy = rows[0];
   for (let i = 0; i < rows.length; i++) {}
 
   console.log("row_pierwszy", row_pierwszy);
 
-  list_bccr_bcm2_0.push(rows[0]);
-  console.log("lista bcc", list_bccr_bcm2_0);
-  list_cccma_cgcm3_1.push(rows[1]);
-  console.log("lista ccc", list_cccma_cgcm3_1);
+  for (let j = 0; j < rows.length; j++) {
+    for (let i = 0; i < listOfMonths.length; i++) {
+      list_bccr_bcm2_0.push(rows[j][i]);
+    }
+  }
+  for (let j = 1; j < rows.length; j++) {
+    for (let i = 0; i < listOfMonths.length; i++) {
+      list_cccma_cgcm3_1.push(rows[j][i]);
+    }
+  }
+  for (let j = 2; j < rows.length; j++) {
+    for (let i = 0; i < listOfMonths.length; i++) {
+      list_cnrm_cm3.push(rows[j][i]);
+    }
+  }
+  for (let j = 3; j < rows.length; j++) {
+    for (let i = 0; i < listOfMonths.length; i++) {
+      list_csiro_mk3_5.push(rows[j][i]);
+    }
+  }
+  for (let j = 4; j < rows.length; j++) {
+    for (let i = 0; i < listOfMonths.length; i++) {
+      list_gfdl_cm2_0.push(rows[j][i]);
+    }
+  }
+  for (let j = 5; j < rows.length; j++) {
+    for (let i = 0; i < listOfMonths.length; i++) {
+      list_gfdl_cm2_1.push(rows[j][i]);
+    }
+  }
+  for (let j = 6; j < rows.length; j++) {
+    for (let i = 0; i < listOfMonths.length; i++) {
+      list_ingv_echam4.push(rows[j][i]);
+    }
+  }
+  for (let j = 7; j < rows.length; j++) {
+    for (let i = 0; i < listOfMonths.length; i++) {
+      list_inmcm3_0.push(rows[j][i]);
+    }
+  }
+  for (let j = 8; j < rows.length; j++) {
+    for (let i = 0; i < listOfMonths.length; i++) {
+      list_ipsl_cm4.push(rows[j][i]);
+    }
+  }
+  for (let j = 9; j < rows.length; j++) {
+    for (let i = 0; i < listOfMonths.length; i++) {
+      list_miroc3_2_medres.push(rows[j][i]);
+    }
+  }
+  for (let j = 10; j < rows.length; j++) {
+    for (let i = 0; i < listOfMonths.length; i++) {
+      list_miub_echo_g.push(rows[j][i]);
+    }
+  }
+  for (let j = 11; j < rows.length; j++) {
+    for (let i = 0; i < listOfMonths.length; i++) {
+      list_mpi_echam5.push(rows[j][i]);
+    }
+  }
+  for (let j = 12; j < rows.length; j++) {
+    for (let i = 0; i < listOfMonths.length; i++) {
+      list_mri_cgcm2_3_2a.push(rows[j][i]);
+    }
+  }
+  for (let j = 13; j < rows.length; j++) {
+    for (let i = 0; i < listOfMonths.length; i++) {
+      list_ukmo_hadcm3.push(rows[j][i]);
+    }
+  }
+  for (let j = 14; j < rows.length; j++) {
+    for (let i = 0; i < listOfMonths.length; i++) {
+      list_ukmo_hadgem1.push(rows[j][i]);
+    }
+  }
 
-  list_cnrm_cm3.push(rows[2]);
-  list_csiro_mk3_5.push(rows[3]);
-  list_gfdl_cm2_0.push(rows[4]);
-  list_gfdl_cm2_1.push(rows[5]);
-  list_ingv_echam4.push(rows[6]);
-  list_inmcm3_0.push(rows[7]);
-  list_ipsl_cm4.push(rows[8]);
-  list_miroc3_2_medres.push(rows[9]);
-  list_miub_echo_g.push(rows[10]);
-  list_mpi_echam5.push(rows[11]);
-  list_mri_cgcm2_3_2a.push(rows[12]);
-  list_ukmo_hadcm3.push(rows[13]);
-  list_ukmo_hadgem1.push(rows[14]);
   // rows.map((item) => {
   //   for (var i = 0; i < item.length; i++) {
   //     console.log(item[i], listOfMonths[i]);
   //   }
   //   console.log("-----------------------------------");
   // });
+  // map(item)
+  //  for i in item.lengfht:
+
   for (let i = 0; i < listOfMonths.length; i++) {
     row.push({
       id: i,
@@ -140,6 +212,9 @@ const ModelResults = (props) => {
   const useStyles = makeStyles((theme) => ({
     root: {
       // flexGrow: 1,
+      background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
+      border: 4,
+      borderRadius: 3,
       justifyContent: "space-evenly",
       fontSize: 16,
       direction: "row",
