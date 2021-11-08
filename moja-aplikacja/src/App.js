@@ -40,27 +40,33 @@ const ModelResults = (props) => {
   ];
   const listOfModels = [];
   const [rowDict, setRowDict] = useState({});
+  const columns = [{ field: "month", headerName: "Month", width: 150 }];
 
   const firstRow = ["Model type"];
   const rows = [];
-  // const rowDict = [];
-  // console.log("hello");
-  // console.log(props.items);
+
   props.items.map((Object) => {
     listOfModels.push(Object.gcm);
-    console.log(Object);
     rows.push(Object.monthVals);
     return rows;
   });
-  console.log(rows);
+  console.log("ROWS!!", rows);
+  for (var i = 0; i < rows.length; i++) {
+    columns.push({
+      field: listOfModels[i],
+      headerName: listOfModels[i],
+      width: 150,
+      editable: true,
+    });
+  }
+
   rows.map((item) => {
     for (var i = 0; i < item.length; i++) {
       console.log(item[i], listOfMonths[i]);
     }
     console.log("-----------------------------------");
   });
-  console.log(listOfModels);
-
+  console.log(columns);
   for (var i = 0; i < rows.length; i++) {
     for (var j = 0; j < listOfMonths.length; j++) {}
   }
@@ -119,7 +125,7 @@ const App = () => {
         console.log("error", error);
       }
     };
-    console.log(getUrl);
+    // console.log(getUrl);
     fetchData();
   }, [monthlyOrAnnual, precipitationTemp, period, startYear, endYear, country]); // jeśli te wartości z tej tablicy się zmienią to ten useEffect się wywoła
 
