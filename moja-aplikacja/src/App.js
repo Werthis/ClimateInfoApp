@@ -9,7 +9,7 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import TextField from "@material-ui/core/TextField";
 import TodayIcon from "@material-ui/icons/Today";
 import CachedIcon from "@material-ui/icons/Cached";
-// import { DataGrid } from "@material-ui/data-grid";
+import { DataGrid } from "@material-ui/data-grid";
 
 import rainLogo from "./rain.png";
 import tempLogo from "./temp.png";
@@ -60,14 +60,16 @@ const ModelResults = (props) => {
   const columns = [{ field: "month", headerName: "Month", width: 150 }];
   const row = [];
 
+  // const rows = [];
   const rows = [];
 
   props.items.map((Object) => {
     listOfModels.push(Object.gcm);
     rows.push(Object.monthVals);
+
     return rows;
   });
-  console.log("ROWS!!", rows);
+  console.log("rows!!", rows);
   console.log("1st ROW!!", rows[0]);
   for (let i = 0; i < rows.length; i++) {
     columns.push({
@@ -77,13 +79,12 @@ const ModelResults = (props) => {
       editable: true,
     });
   }
-  // console.log("listOfModels      ", listOfModels);
-  for (let i = 0; i < rows.length; i++) {
-    listaPomocnicza.push(listOfModels[i], rows[i]);
-    // listaPomocnicza.push(rows[i] );
-  }
 
-  console.log("listaPomocnicza         ", listaPomocnicza);
+  const row_pierwszy = rows[0];
+  for (let i = 0; i < rows.length; i++) {}
+
+  console.log("row_pierwszy", row_pierwszy);
+
   list_bccr_bcm2_0.push(rows[0]);
   console.log("lista bcc", list_bccr_bcm2_0);
   list_cccma_cgcm3_1.push(rows[1]);
@@ -110,6 +111,7 @@ const ModelResults = (props) => {
   // });
   for (let i = 0; i < listOfMonths.length; i++) {
     row.push({
+      id: i,
       month: listOfMonths[i],
       bccr_bcm2_0: list_bccr_bcm2_0[i],
       cccma_cgcm3_1: list_cccma_cgcm3_1[i],
@@ -131,9 +133,9 @@ const ModelResults = (props) => {
   console.log(row);
 
   console.log(columns);
-  for (var i = 0; i < rows.length; i++) {
-    for (var j = 0; j < listOfMonths.length; j++) {}
-  }
+  // for (var i = 0; i < rows.length; i++) {
+  //   for (var j = 0; j < listOfMonths.length; j++) {}
+  // }
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -157,11 +159,26 @@ const ModelResults = (props) => {
     // monthValuesArray,
 
     <>
-      <Grid container>
-        <Paper elevation={3} direction="row" className={classes.root}>
-          lol
-        </Paper>
-      </Grid>
+      <div style={{ height: 400, width: "100%" }}>
+        <Grid container>
+          <DataGrid
+            item="true"
+            className={classes.root}
+            rows={row}
+            columns={columns}
+            autoHeight="true"
+            disableColumnFilter="true"
+            disableColumnMenu="true"
+            disableColumnSelector="true"
+            disableDensitySelector="true"
+            disableExtendRowFullWidth="true"
+            disableSelectionOnClick="true"
+            // pageSize={12}
+            // checkboxSelection
+            // disableSelectionOnClick
+          />
+        </Grid>
+      </div>
     </>
   );
 };
