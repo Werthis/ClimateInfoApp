@@ -9,6 +9,7 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import TextField from "@material-ui/core/TextField";
 import TodayIcon from "@material-ui/icons/Today";
 import CachedIcon from "@material-ui/icons/Cached";
+import Typography from "@material-ui/core/Typography";
 import { DataGrid } from "@material-ui/data-grid";
 
 import rainLogo from "./rain.png";
@@ -16,11 +17,16 @@ import tempLogo from "./temp.png";
 
 import allAppData from "./allAppData";
 
-// zrobić uniwersalne też dal annual
+//    zrobić uniwersalne też dla annual     ?????????????? jak zmienić na annual żeby się nie wykrzaczyło????
 // poprawić czcionkę select country, choose period i tabeli
 // zrobić zaokrąglenie do 2 miejsca po przecinku
 // .toFixed(2)
 // popraw listę iso_3
+
+// jak zmienić na annual żeby się nie wykrzaczyło????
+// Dlaczego w consoli każdy element wyświetla się kilka razy
+// jak zmienić font w tabeli
+
 
 const ModelResults = (props) => {
   const list_bccr_bcm2_0 = [];
@@ -40,12 +46,9 @@ const ModelResults = (props) => {
   const list_ukmo_hadgem1 = [];
 
   const listOfModels = [];
-  // const listaPomocnicza1 = [];
   const listaPomocnicza2 = [];
   const columns = [{ field: "month", headerName: "Model", width: 105 }];
   const row = [];
-
-  // const rows = [];
   const rows = [];
 
   props.items.map((Object) => {
@@ -58,6 +61,7 @@ const ModelResults = (props) => {
 
     return rows;
   });
+  const firstRow = [];
 
   const listOfMonths = [
     "January",
@@ -73,14 +77,20 @@ const ModelResults = (props) => {
     "November",
     "December",
   ];
-  const annualWord = "Annual";
-  const monthsOrAnnual = listOfMonths;
+  const annualWord = ["Annual"];
+  // const [monthsOrAnnual, setMonthsOrAnnual] = useState([]);
+
+  // if (firstRow.length === listOfMonths.length) {
+  //     setMonthsOrAnnual(listOfMonths);
+
+  // } else {
+  //     setMonthsOrAnnual(annualWord);
+  //   }
+
   // if (rows[0].length === 1) {
-  //   monthsOrAnnual = annualWord;
+  const monthsOrAnnual = listOfMonths;
   // }
 
-  console.log("................", props.items.monthVals);
-  console.log("1st ROW!!", rows[0]);
   for (let i = 0; i < rows.length; i++) {
     columns.push({
       field: listOfModels[i],
@@ -90,14 +100,16 @@ const ModelResults = (props) => {
     });
   }
   console.log("------------------------");
-  console.log("------------------------");
-  console.log(listaPomocnicza2);
-  console.log("------------------------");
+
+  console.log("ROWS:");
+  console.log(rows);
+  console.log("monthsOrAnnual:");
+  console.log(monthsOrAnnual)
+
+
   const row_pierwszy = rows[0];
-  for (let i = 0; i < rows.length; i++) {}
-
+  // for (let i = 0; i < rows.length; i++) {}
   console.log("row_pierwszy", row_pierwszy);
-
   for (let j = 0; j < rows.length; j++) {
     for (let i = 0; i < monthsOrAnnual.length; i++) {
       list_bccr_bcm2_0.push(rows[j][i]);
@@ -177,7 +189,6 @@ const ModelResults = (props) => {
   //   monthsOrAnnual = annualWord;
   // }
 
-  ;
   // rows.map((item) => {
   //   for (var i = 0; i < item.length; i++) {
   //     console.log(item[i], listOfMonths[i]);
@@ -241,8 +252,9 @@ const ModelResults = (props) => {
 
     <>
       <div style={{ height: 400, width: "100%" }}>
-        <Grid container>
+        <Grid container fontFamily="Open Sans">
           <DataGrid
+            // fontFamily="Calibri"
             item="true"
             className={classes.root}
             rows={row}
@@ -287,7 +299,6 @@ const App = () => {
         console.log("error", error);
       }
     };
-    // console.log(getUrl);
     fetchData();
   }, [monthlyOrAnnual, precipitationTemp, period, startYear, endYear, country]); // jeśli te wartości z tej tablicy się zmienią to ten useEffect się wywoła
 

@@ -73,3 +73,4 @@ for (let i = 0; i < listOfMonths.length; i++) {
     ukmo_hadgem1: list_ukmo_hadgem1[i],
   });
 }
+console.log(row);
