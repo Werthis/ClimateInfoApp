@@ -19,14 +19,13 @@ import allAppData from "./allAppData";
 
 //    zrobić uniwersalne też dla annual     ?????????????? jak zmienić na annual żeby się nie wykrzaczyło????
 // poprawić czcionkę select country, choose period i tabeli
-// zrobić zaokrąglenie do 2 miejsca po przecinku
+// zrobić zaokrąglenie do 2 miejsca po przecinku ---------- wychodzi error przy annual
 // .toFixed(2)
-// popraw listę iso_3
+//          popraw listę iso_3
 
 // jak zmienić na annual żeby się nie wykrzaczyło????
 // Dlaczego w consoli każdy element wyświetla się kilka razy
-// jak zmienić font w tabeli
-
+// jak zmienić font w tabeli, co definiuje font Climate data?
 
 const ModelResults = (props) => {
   const list_bccr_bcm2_0 = [];
@@ -47,7 +46,7 @@ const ModelResults = (props) => {
 
   const listOfModels = [];
   const listaPomocnicza2 = [];
-  const columns = [{ field: "month", headerName: "Model", width: 105 }];
+  const columns = [{ field: "model", headerName: "Model", width: 105 }];
   const row = [];
   const rows = [];
 
@@ -104,8 +103,7 @@ const ModelResults = (props) => {
   console.log("ROWS:");
   console.log(rows);
   console.log("monthsOrAnnual:");
-  console.log(monthsOrAnnual)
-
+  console.log(monthsOrAnnual);
 
   const row_pierwszy = rows[0];
   // for (let i = 0; i < rows.length; i++) {}
@@ -201,7 +199,7 @@ const ModelResults = (props) => {
   for (let i = 0; i < monthsOrAnnual.length; i++) {
     row.push({
       id: i,
-      month: monthsOrAnnual[i],
+      model: monthsOrAnnual[i],
       bccr_bcm2_0: list_bccr_bcm2_0[i],
       cccma_cgcm3_1: list_cccma_cgcm3_1[i],
       cnrm_cm3: list_cnrm_cm3[i],
@@ -229,7 +227,8 @@ const ModelResults = (props) => {
   const useStyles = makeStyles((theme) => ({
     root: {
       // flexGrow: 1,
-      background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
+      background: "linear-gradient(45deg, #fffff0 30%, #ffffe0 90%)",
+      fontFamily: "Calibri",
       border: 4,
       borderRadius: 3,
       justifyContent: "space-evenly",
@@ -252,9 +251,9 @@ const ModelResults = (props) => {
 
     <>
       <div style={{ height: 400, width: "100%" }}>
-        <Grid container fontFamily="Open Sans">
+        <Grid container>
           <DataGrid
-            // fontFamily="Calibri"
+            fontFamily="Calibri"
             item="true"
             className={classes.root}
             rows={row}
@@ -332,6 +331,7 @@ const App = () => {
       justifyContent: "space-evenly",
       fontSize: 50,
     },
+
     paper: {
       padding: theme.spacing(2),
       textAlign: "center",
@@ -342,10 +342,18 @@ const App = () => {
       background: "#fffff0",
     },
     select: {
+      color: theme.palette.text.secondary,
+
       background: "#fffff0",
+      fontFamily: "Calibri",
+      closeIcon: "false",
+    },
+    textField: {
+      fontFamily: "Calibri",
     },
     option: {
       fontSize: 15,
+      fontFamily: "Calibri",
       "& > span": {
         marginRight: 100,
         fontSize: 18,
@@ -390,6 +398,7 @@ const App = () => {
 
             <Autocomplete
               className={classes.select}
+              disableClearable
               value={country}
               onChange={(event, newCountry) => {
                 setCountry(newCountry);
@@ -410,11 +419,12 @@ const App = () => {
               renderOption={(option) => (
                 <React.Fragment>
                   <span>{countryToFlag(option.code)}</span>
-                  {option.label} ({option.code}) + {option.phone}
+                  {option.label} ({option.code})
                 </React.Fragment>
               )}
               renderInput={(params) => (
                 <TextField
+                  className={classes.select}
                   {...params}
                   label="Select a country"
                   variant="outlined"
@@ -454,6 +464,7 @@ const App = () => {
 
             <Autocomplete
               className={classes.select}
+              disableClearable
               value={period}
               onChange={(event, newPeriod) => {
                 setPeriod(newPeriod);
