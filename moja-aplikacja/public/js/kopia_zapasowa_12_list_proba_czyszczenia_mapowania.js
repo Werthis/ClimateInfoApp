@@ -43,7 +43,7 @@ const ModelResults = (props) => {
     "December",
   ];
   const annualWord = ["Annual"];
-  
+
   const list_bccr_bcm2_0 = [];
   const list_cccma_cgcm3_1 = [];
   const list_cnrm_cm3 = [];
@@ -63,145 +63,113 @@ const ModelResults = (props) => {
   const listOfModels = [];
   const listaPomocnicza2 = [];
   const columns = [{ field: "model", headerName: "Model", width: 105 }];
-  const row = [];
   const rows = [];
 
   props.items.map((Object) => {
     listOfModels.push(Object.gcm);
     if (Object.monthVals != null) {
-      rows.push(Object.monthVals);
+      for (let j = 0; j < Object.monthVals.length; j++) {
+        for (let i = 0; i < listOfMonths.length; i++) {
+          list_bccr_bcm2_0.push(Object.monthVals[j][i]);
+        }
+      }
+      for (let j = 1; j < Object.monthVals.length; j++) {
+        for (let i = 0; i < listOfMonths.length; i++) {
+          list_cccma_cgcm3_1.push(Object.monthVals[j][i]);
+        }
+      }
+      for (let j = 2; j < Object.monthVals.length; j++) {
+        for (let i = 0; i < listOfMonths.length; i++) {
+          list_cnrm_cm3.push(Object.monthVals[j][i]);
+        }
+      }
+      for (let j = 3; j < Object.monthVals.length; j++) {
+        for (let i = 0; i < listOfMonths.length; i++) {
+          list_csiro_mk3_5.push(Object.monthVals[j][i]);
+        }
+      }
+      for (let j = 4; j < Object.monthVals.length; j++) {
+        for (let i = 0; i < listOfMonths.length; i++) {
+          list_gfdl_cm2_0.push(Object.monthVals[j][i]);
+        }
+      }
+      for (let j = 5; j < Object.monthVals.length; j++) {
+        for (let i = 0; i < listOfMonths.length; i++) {
+          list_gfdl_cm2_1.push(Object.monthVals[j][i]);
+        }
+      }
+      for (let j = 6; j < Object.monthVals.length; j++) {
+        for (let i = 0; i < listOfMonths.length; i++) {
+          list_ingv_echam4.push(Object.monthVals[j][i]);
+        }
+      }
+      for (let j = 7; j < Object.monthVals.length; j++) {
+        for (let i = 0; i < listOfMonths.length; i++) {
+          list_inmcm3_0.push(Object.monthVals[j][i]);
+        }
+      }
+      for (let j = 8; j < Object.monthVals.length; j++) {
+        for (let i = 0; i < listOfMonths.length; i++) {
+          list_ipsl_cm4.push(Object.monthVals[j][i]);
+        }
+      }
+      for (let j = 9; j < Object.monthVals.length; j++) {
+        for (let i = 0; i < listOfMonths.length; i++) {
+          list_miroc3_2_medres.push(Object.monthVals[j][i]);
+        }
+      }
+      for (let j = 10; j < Object.monthVals.length; j++) {
+        for (let i = 0; i < listOfMonths.length; i++) {
+          list_miub_echo_g.push(Object.monthVals[j][i]);
+        }
+      }
+      for (let j = 11; j < Object.monthVals.length; j++) {
+        for (let i = 0; i < listOfMonths.length; i++) {
+          list_mpi_echam5.push(Object.monthVals[j][i]);
+        }
+      }
+      for (let j = 12; j < Object.monthVals.length; j++) {
+        for (let i = 0; i < listOfMonths.length; i++) {
+          list_mri_cgcm2_3_2a.push(Object.monthVals[j][i]);
+        }
+      }
+      for (let j = 13; j < Object.monthVals.length; j++) {
+        for (let i = 0; i < listOfMonths.length; i++) {
+          list_ukmo_hadcm3.push(Object.monthVals[j][i]);
+        }
+      }
+      for (let j = 14; j < Object.monthVals.length; j++) {
+        for (let i = 0; i < listOfMonths.length; i++) {
+          list_ukmo_hadgem1.push(Object.monthVals[j][i]);
+        }
+      }
+      for (let i = 0; i < Object.monthVals.length; i++) {
+        columns.push({
+          field: listOfModels[i],
+          headerName: listOfModels[i],
+          width: 130,
+          editable: true,
+        });
+      }
+      console.log("------------------------");
+      console.log("list_bccr_bcm2_0:", list_bccr_bcm2_0);
+      console.log("------------------------");
+      console.log("Object.monthVals.length:", Object.monthVals.length);
+      console.log("------------------------");
+      console.log("list_bccr_bcm2_0:", list_bccr_bcm2_0);
+
+      // Object.monthVals.length
+    
     } else {
-      rows.push(Object.annualData);
     }
 
-    return rows;
+    return;
   });
-  const firstRow = [];
 
-
-  // const [monthsOrAnnual, setMonthsOrAnnual] = useState([]);
-
-  // if (firstRow.length === listOfMonths.length) {
-  //     setMonthsOrAnnual(listOfMonths);
-
-  // } else {
-  //     setMonthsOrAnnual(annualWord);
-  //   }
-
-  // if (rows[0].length === 1) {
-  const monthsOrAnnual = listOfMonths;
-  // }
-
-  for (let i = 0; i < rows.length; i++) {
-    columns.push({
-      field: listOfModels[i],
-      headerName: listOfModels[i],
-      width: 130,
-      editable: true,
-    });
-  }
-  console.log("------------------------");
-
-  console.log("ROWS:");
-  console.log(rows);
-  console.log("monthsOrAnnual:");
-  console.log(monthsOrAnnual);
-
-  const row_pierwszy = rows[0];
-  // for (let i = 0; i < rows.length; i++) {}
-  console.log("row_pierwszy", row_pierwszy);
-  for (let j = 0; j < rows.length; j++) {
-    for (let i = 0; i < monthsOrAnnual.length; i++) {
-      list_bccr_bcm2_0.push(rows[j][i]);
-    }
-  }
-  for (let j = 1; j < rows.length; j++) {
-    for (let i = 0; i < monthsOrAnnual.length; i++) {
-      list_cccma_cgcm3_1.push(rows[j][i]);
-    }
-  }
-  for (let j = 2; j < rows.length; j++) {
-    for (let i = 0; i < monthsOrAnnual.length; i++) {
-      list_cnrm_cm3.push(rows[j][i]);
-    }
-  }
-  for (let j = 3; j < rows.length; j++) {
-    for (let i = 0; i < monthsOrAnnual.length; i++) {
-      list_csiro_mk3_5.push(rows[j][i]);
-    }
-  }
-  for (let j = 4; j < rows.length; j++) {
-    for (let i = 0; i < monthsOrAnnual.length; i++) {
-      list_gfdl_cm2_0.push(rows[j][i]);
-    }
-  }
-  for (let j = 5; j < rows.length; j++) {
-    for (let i = 0; i < monthsOrAnnual.length; i++) {
-      list_gfdl_cm2_1.push(rows[j][i]);
-    }
-  }
-  for (let j = 6; j < rows.length; j++) {
-    for (let i = 0; i < monthsOrAnnual.length; i++) {
-      list_ingv_echam4.push(rows[j][i]);
-    }
-  }
-  for (let j = 7; j < rows.length; j++) {
-    for (let i = 0; i < monthsOrAnnual.length; i++) {
-      list_inmcm3_0.push(rows[j][i]);
-    }
-  }
-  for (let j = 8; j < rows.length; j++) {
-    for (let i = 0; i < monthsOrAnnual.length; i++) {
-      list_ipsl_cm4.push(rows[j][i]);
-    }
-  }
-  for (let j = 9; j < rows.length; j++) {
-    for (let i = 0; i < monthsOrAnnual.length; i++) {
-      list_miroc3_2_medres.push(rows[j][i]);
-    }
-  }
-  for (let j = 10; j < rows.length; j++) {
-    for (let i = 0; i < monthsOrAnnual.length; i++) {
-      list_miub_echo_g.push(rows[j][i]);
-    }
-  }
-  for (let j = 11; j < rows.length; j++) {
-    for (let i = 0; i < monthsOrAnnual.length; i++) {
-      list_mpi_echam5.push(rows[j][i]);
-    }
-  }
-  for (let j = 12; j < rows.length; j++) {
-    for (let i = 0; i < monthsOrAnnual.length; i++) {
-      list_mri_cgcm2_3_2a.push(rows[j][i]);
-    }
-  }
-  for (let j = 13; j < rows.length; j++) {
-    for (let i = 0; i < monthsOrAnnual.length; i++) {
-      list_ukmo_hadcm3.push(rows[j][i]);
-    }
-  }
-  for (let j = 14; j < rows.length; j++) {
-    for (let i = 0; i < monthsOrAnnual.length; i++) {
-      list_ukmo_hadgem1.push(rows[j][i]);
-    }
-  }
-  // if (row_pierwszy.length === 1) {
-  //   monthsOrAnnual = annualWord;
-  // }
-
-  // rows.map((item) => {
-  //   for (var i = 0; i < item.length; i++) {
-  //     console.log(item[i], listOfMonths[i]);
-  //   }
-  //   console.log("-----------------------------------");
-  // });
-  // map(item)
-  //  for i in item.lengfht:
-
-  for (let i = 0; i < monthsOrAnnual.length; i++) {
-    row.push({
+  for (let i = 0; i < listOfMonths.length; i++) {
+    rows.push({
       id: i,
-      model: monthsOrAnnual[i],
+      model: listOfMonths[i],
       bccr_bcm2_0: list_bccr_bcm2_0[i],
       cccma_cgcm3_1: list_cccma_cgcm3_1[i],
       cnrm_cm3: list_cnrm_cm3[i],
@@ -219,7 +187,33 @@ const ModelResults = (props) => {
       ukmo_hadgem1: list_ukmo_hadgem1[i],
     });
   }
-  console.log(row);
+
+  const firstRow = [];
+
+  const monthsOrAnnual = listOfMonths;
+
+  console.log("------------------------");
+
+  console.log("FINAL ROWS:");
+  console.log(rows);
+  console.log("monthsOrAnnual:");
+  console.log(monthsOrAnnual);
+
+  const row_pierwszy = rows[0];
+  // for (let i = 0; i < rows.length; i++) {}
+  console.log("row_pierwszy", row_pierwszy);
+  // if (row_pierwszy.length === 1) {
+  //   monthsOrAnnual = annualWord;
+  // }
+
+  // rows.map((item) => {
+  //   for (var i = 0; i < item.length; i++) {
+  //     console.log(item[i], listOfMonths[i]);
+  //   }
+  //   console.log("-----------------------------------");
+  // });
+  // map(item)
+  //  for i in item.lengfht:
 
   console.log(columns);
   // for (var i = 0; i < rows.length; i++) {
@@ -258,7 +252,7 @@ const ModelResults = (props) => {
             fontFamily="Calibri"
             item="true"
             className={classes.root}
-            rows={row}
+            rows={rows}
             columns={columns}
             autoHeight="true"
             disableColumnFilter="true"

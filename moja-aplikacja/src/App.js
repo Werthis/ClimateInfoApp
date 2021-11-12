@@ -28,6 +28,22 @@ import allAppData from "./allAppData";
 // jak zmienić font w tabeli, co definiuje font Climate data?
 
 const ModelResults = (props) => {
+  const listOfMonths = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  const annualWord = ["Annual"];
+
   const list_bccr_bcm2_0 = [];
   const list_cccma_cgcm3_1 = [];
   const list_cnrm_cm3 = [];
@@ -49,46 +65,32 @@ const ModelResults = (props) => {
   const columns = [{ field: "model", headerName: "Model", width: 105 }];
   const row = [];
   const rows = [];
+  var lenghtOfMonthsOrAnnual = 0;
+  var monthsOrAnnual = [];
 
   props.items.map((Object) => {
     listOfModels.push(Object.gcm);
     if (Object.monthVals != null) {
       rows.push(Object.monthVals);
+      lenghtOfMonthsOrAnnual = Object.monthVals.length;
     } else {
       rows.push(Object.annualData);
+      lenghtOfMonthsOrAnnual = Object.annualData.length;
     }
 
-    return rows;
+    return rows, lenghtOfMonthsOrAnnual;
   });
-  const firstRow = [];
+  if (lenghtOfMonthsOrAnnual === 12) {
+    monthsOrAnnual = listOfMonths;
+  } else {
+    monthsOrAnnual = annualWord;
+  }
 
-  const listOfMonths = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-  const annualWord = ["Annual"];
-  // const [monthsOrAnnual, setMonthsOrAnnual] = useState([]);
+  console.log("------------------------");
 
-  // if (firstRow.length === listOfMonths.length) {
-  //     setMonthsOrAnnual(listOfMonths);
+  console.log("lenghtOfMonthsOrAnnual:");
 
-  // } else {
-  //     setMonthsOrAnnual(annualWord);
-  //   }
-
-  // if (rows[0].length === 1) {
-  const monthsOrAnnual = listOfMonths;
-  // }
+  console.log(lenghtOfMonthsOrAnnual);
 
   for (let i = 0; i < rows.length; i++) {
     columns.push({
@@ -105,84 +107,86 @@ const ModelResults = (props) => {
   console.log("monthsOrAnnual:");
   console.log(monthsOrAnnual);
 
-  const row_pierwszy = rows[0];
+  // const row_pierwszy = rows[0];
   // for (let i = 0; i < rows.length; i++) {}
-  console.log("row_pierwszy", row_pierwszy);
+  // console.log("row_pierwszy", row_pierwszy);
+
   for (let j = 0; j < rows.length; j++) {
     for (let i = 0; i < monthsOrAnnual.length; i++) {
-      list_bccr_bcm2_0.push(rows[j][i]);
+      list_bccr_bcm2_0.push(rows[j][i].toFixed(2));
     }
   }
   for (let j = 1; j < rows.length; j++) {
     for (let i = 0; i < monthsOrAnnual.length; i++) {
-      list_cccma_cgcm3_1.push(rows[j][i]);
+      list_cccma_cgcm3_1.push(rows[j][i].toFixed(2));
     }
   }
   for (let j = 2; j < rows.length; j++) {
     for (let i = 0; i < monthsOrAnnual.length; i++) {
-      list_cnrm_cm3.push(rows[j][i]);
+      list_cnrm_cm3.push(rows[j][i].toFixed(2));
     }
   }
   for (let j = 3; j < rows.length; j++) {
     for (let i = 0; i < monthsOrAnnual.length; i++) {
-      list_csiro_mk3_5.push(rows[j][i]);
+      list_csiro_mk3_5.push(rows[j][i].toFixed(2));
     }
   }
   for (let j = 4; j < rows.length; j++) {
     for (let i = 0; i < monthsOrAnnual.length; i++) {
-      list_gfdl_cm2_0.push(rows[j][i]);
+      list_gfdl_cm2_0.push(rows[j][i].toFixed(2));
     }
   }
   for (let j = 5; j < rows.length; j++) {
     for (let i = 0; i < monthsOrAnnual.length; i++) {
-      list_gfdl_cm2_1.push(rows[j][i]);
+      list_gfdl_cm2_1.push(rows[j][i].toFixed(2));
     }
   }
   for (let j = 6; j < rows.length; j++) {
     for (let i = 0; i < monthsOrAnnual.length; i++) {
-      list_ingv_echam4.push(rows[j][i]);
+      list_ingv_echam4.push(rows[j][i].toFixed(2));
     }
   }
   for (let j = 7; j < rows.length; j++) {
     for (let i = 0; i < monthsOrAnnual.length; i++) {
-      list_inmcm3_0.push(rows[j][i]);
+      list_inmcm3_0.push(rows[j][i].toFixed(2));
     }
   }
   for (let j = 8; j < rows.length; j++) {
     for (let i = 0; i < monthsOrAnnual.length; i++) {
-      list_ipsl_cm4.push(rows[j][i]);
+      list_ipsl_cm4.push(rows[j][i].toFixed(2));
     }
   }
   for (let j = 9; j < rows.length; j++) {
     for (let i = 0; i < monthsOrAnnual.length; i++) {
-      list_miroc3_2_medres.push(rows[j][i]);
+      list_miroc3_2_medres.push(rows[j][i].toFixed(2));
     }
   }
   for (let j = 10; j < rows.length; j++) {
     for (let i = 0; i < monthsOrAnnual.length; i++) {
-      list_miub_echo_g.push(rows[j][i]);
+      list_miub_echo_g.push(rows[j][i].toFixed(2));
     }
   }
   for (let j = 11; j < rows.length; j++) {
     for (let i = 0; i < monthsOrAnnual.length; i++) {
-      list_mpi_echam5.push(rows[j][i]);
+      list_mpi_echam5.push(rows[j][i].toFixed(2));
     }
   }
   for (let j = 12; j < rows.length; j++) {
     for (let i = 0; i < monthsOrAnnual.length; i++) {
-      list_mri_cgcm2_3_2a.push(rows[j][i]);
+      list_mri_cgcm2_3_2a.push(rows[j][i].toFixed(2));
     }
   }
   for (let j = 13; j < rows.length; j++) {
     for (let i = 0; i < monthsOrAnnual.length; i++) {
-      list_ukmo_hadcm3.push(rows[j][i]);
+      list_ukmo_hadcm3.push(rows[j][i].toFixed(2));
     }
   }
   for (let j = 14; j < rows.length; j++) {
     for (let i = 0; i < monthsOrAnnual.length; i++) {
-      list_ukmo_hadgem1.push(rows[j][i]);
+      list_ukmo_hadgem1.push(rows[j][i].toFixed(2));
     }
   }
+
   // if (row_pierwszy.length === 1) {
   //   monthsOrAnnual = annualWord;
   // }
