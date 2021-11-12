@@ -375,6 +375,20 @@ const App = () => {
           <Grid item sm={12}>
             <Paper className={classes.paper}>Climate data</Paper>
           </Grid>
+          <Grid item sm={12}>
+            <Paper className={classes.infoText}>
+              This is Climat info App
+              <br /> It is using Climate Data API from The World Bank website,
+              which is pretty cool stuff. App gives you access to climat data
+              all over the world.
+              <br />
+              
+              You can get data from the past and from the future too. It gives
+              an oportunity to observe how climate is chcanging all over the world.
+              <br />
+              Please choose data you need
+            </Paper>
+          </Grid>
           <Grid item sm={12} container spacing={0} className={classes.root}>
             <ToggleButtonGroup
               value={precipitationTemp}
