@@ -1,33 +1,22 @@
 import React, { useState, useEffect } from "react";
-// import Button from '@material-ui/core/Button';
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
+import { Container } from "@material-ui/core";
 import ToggleButton from "@material-ui/lab/ToggleButton";
 import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import TextField from "@material-ui/core/TextField";
 import TodayIcon from "@material-ui/icons/Today";
 import CachedIcon from "@material-ui/icons/Cached";
-import Typography from "@material-ui/core/Typography";
-import { borders } from "@material-ui/system";
-import { DataGrid } from "@material-ui/data-grid";
+import { Bar } from "react-chartjs-2";
 
 import rainLogo from "./rain.png";
 import tempLogo from "./temp.png";
 
 import allAppData from "./allAppData";
 
-//    zrobić uniwersalne też dla annual     ?????????????? jak zmienić na annual żeby się nie wykrzaczyło????
-// poprawić czcionkę select country, choose period i tabeli
-// zrobić zaokrąglenie do 2 miejsca po przecinku ---------- wychodzi error przy annual
-// .toFixed(2)
-//          popraw listę iso_3
-
-// jak zmienić na annual żeby się nie wykrzaczyło????
 // Dlaczego w consoli każdy element wyświetla się kilka razy
-// jak zmienić font w tabeli, co definiuje font Climate data?
 
 const ModelResults = (props) => {
   const listOfMonths = [
@@ -45,33 +34,18 @@ const ModelResults = (props) => {
     "December",
   ];
   const annualWord = ["Annual"];
-
   const list_bccr_bcm2_0 = [];
-  const list_cccma_cgcm3_1 = [];
-  const list_cnrm_cm3 = [];
-  const list_csiro_mk3_5 = [];
-  const list_gfdl_cm2_0 = [];
-  const list_gfdl_cm2_1 = [];
-  const list_ingv_echam4 = [];
-  const list_inmcm3_0 = [];
-  const list_ipsl_cm4 = [];
-  const list_miroc3_2_medres = [];
-  const list_miub_echo_g = [];
-  const list_mpi_echam5 = [];
-  const list_mri_cgcm2_3_2a = [];
-  const list_ukmo_hadcm3 = [];
-  const list_ukmo_hadgem1 = [];
-
   const listOfModels = [];
-  const listaPomocnicza2 = [];
   const columns = [{ field: "model", headerName: "Model", width: 110 }];
   const row = [];
   const rows = [];
   var lenghtOfMonthsOrAnnual = 0;
   var monthsOrAnnual = [];
+  const listOfTasOrPr = [];
 
   props.items.map((Object) => {
     listOfModels.push(Object.gcm);
+    listOfTasOrPr.push(Object.variable);
     if (Object.monthVals != null) {
       rows.push(Object.monthVals);
       lenghtOfMonthsOrAnnual = Object.monthVals.length;
@@ -80,201 +54,154 @@ const ModelResults = (props) => {
       lenghtOfMonthsOrAnnual = Object.annualData.length;
     }
 
-    return rows, lenghtOfMonthsOrAnnual;
+    return rows;
   });
+  console.log(listOfTasOrPr[0]);
+  const first_row = [];
+  const allValues = [];
+
   if (lenghtOfMonthsOrAnnual === 12) {
     monthsOrAnnual = listOfMonths;
   } else {
     monthsOrAnnual = annualWord;
   }
 
-  console.log("------------------------");
-
-  console.log("lenghtOfMonthsOrAnnual:");
-
-  console.log(lenghtOfMonthsOrAnnual);
-
-  for (let i = 0; i < rows.length; i++) {
-    columns.push({
-      field: listOfModels[i],
-      headerName: listOfModels[i],
-      width: 100,
-      editable: true,
-    });
-  }
-  console.log("------------------------");
-
-  console.log("ROWS:");
-  console.log(rows);
-  console.log("monthsOrAnnual:");
-  console.log(monthsOrAnnual);
-
-  // const row_pierwszy = rows[0];
-  // for (let i = 0; i < rows.length; i++) {}
-  // console.log("row_pierwszy", row_pierwszy);
-
   for (let j = 0; j < rows.length; j++) {
     for (let i = 0; i < monthsOrAnnual.length; i++) {
-      list_bccr_bcm2_0.push(rows[j][i].toFixed(2));
-    }
-  }
-  for (let j = 1; j < rows.length; j++) {
-    for (let i = 0; i < monthsOrAnnual.length; i++) {
-      list_cccma_cgcm3_1.push(rows[j][i].toFixed(2));
-    }
-  }
-  for (let j = 2; j < rows.length; j++) {
-    for (let i = 0; i < monthsOrAnnual.length; i++) {
-      list_cnrm_cm3.push(rows[j][i].toFixed(2));
-    }
-  }
-  for (let j = 3; j < rows.length; j++) {
-    for (let i = 0; i < monthsOrAnnual.length; i++) {
-      list_csiro_mk3_5.push(rows[j][i].toFixed(2));
-    }
-  }
-  for (let j = 4; j < rows.length; j++) {
-    for (let i = 0; i < monthsOrAnnual.length; i++) {
-      list_gfdl_cm2_0.push(rows[j][i].toFixed(2));
-    }
-  }
-  for (let j = 5; j < rows.length; j++) {
-    for (let i = 0; i < monthsOrAnnual.length; i++) {
-      list_gfdl_cm2_1.push(rows[j][i].toFixed(2));
-    }
-  }
-  for (let j = 6; j < rows.length; j++) {
-    for (let i = 0; i < monthsOrAnnual.length; i++) {
-      list_ingv_echam4.push(rows[j][i].toFixed(2));
-    }
-  }
-  for (let j = 7; j < rows.length; j++) {
-    for (let i = 0; i < monthsOrAnnual.length; i++) {
-      list_inmcm3_0.push(rows[j][i].toFixed(2));
-    }
-  }
-  for (let j = 8; j < rows.length; j++) {
-    for (let i = 0; i < monthsOrAnnual.length; i++) {
-      list_ipsl_cm4.push(rows[j][i].toFixed(2));
-    }
-  }
-  for (let j = 9; j < rows.length; j++) {
-    for (let i = 0; i < monthsOrAnnual.length; i++) {
-      list_miroc3_2_medres.push(rows[j][i].toFixed(2));
-    }
-  }
-  for (let j = 10; j < rows.length; j++) {
-    for (let i = 0; i < monthsOrAnnual.length; i++) {
-      list_miub_echo_g.push(rows[j][i].toFixed(2));
-    }
-  }
-  for (let j = 11; j < rows.length; j++) {
-    for (let i = 0; i < monthsOrAnnual.length; i++) {
-      list_mpi_echam5.push(rows[j][i].toFixed(2));
-    }
-  }
-  for (let j = 12; j < rows.length; j++) {
-    for (let i = 0; i < monthsOrAnnual.length; i++) {
-      list_mri_cgcm2_3_2a.push(rows[j][i].toFixed(2));
-    }
-  }
-  for (let j = 13; j < rows.length; j++) {
-    for (let i = 0; i < monthsOrAnnual.length; i++) {
-      list_ukmo_hadcm3.push(rows[j][i].toFixed(2));
-    }
-  }
-  for (let j = 14; j < rows.length; j++) {
-    for (let i = 0; i < monthsOrAnnual.length; i++) {
-      list_ukmo_hadgem1.push(rows[j][i].toFixed(2));
+      allValues.push(rows[j][i].toFixed(2));
     }
   }
 
-  // if (row_pierwszy.length === 1) {
-  //   monthsOrAnnual = annualWord;
-  // }
+  for (let i = 0; i < lenghtOfMonthsOrAnnual; i++) {
+    first_row.push(allValues[i]);
+  }
 
-  // rows.map((item) => {
-  //   for (var i = 0; i < item.length; i++) {
-  //     console.log(item[i], listOfMonths[i]);
-  //   }
-  //   console.log("-----------------------------------");
-  // });
-  // map(item)
-  //  for i in item.lengfht:
+  columns.push({
+    field: listOfModels[0],
+    headerName: listOfModels[0],
+    width: 100,
+    editable: true,
+  });
+
+  for (let j = 0; j < first_row.length; j++) {
+    list_bccr_bcm2_0.push(first_row[j]);
+  }
 
   for (let i = 0; i < monthsOrAnnual.length; i++) {
     row.push({
       id: i,
       model: monthsOrAnnual[i],
       bccr_bcm2_0: list_bccr_bcm2_0[i],
-      cccma_cgcm3_1: list_cccma_cgcm3_1[i],
-      cnrm_cm3: list_cnrm_cm3[i],
-      csiro_mk3_5: list_csiro_mk3_5[i],
-      gfdl_cm2_0: list_gfdl_cm2_0[i],
-      gfdl_cm2_1: list_gfdl_cm2_1[i],
-      ingv_echam4: list_ingv_echam4[i],
-      inmcm3_0: list_inmcm3_0[i],
-      ipsl_cm4: list_ipsl_cm4[i],
-      miroc3_2_medres: list_miroc3_2_medres[i],
-      miub_echo_g: list_miub_echo_g[i],
-      mpi_echam5: list_mpi_echam5[i],
-      mri_cgcm2_3_2a: list_mri_cgcm2_3_2a[i],
-      ukmo_hadcm3: list_ukmo_hadcm3[i],
-      ukmo_hadgem1: list_ukmo_hadgem1[i],
     });
   }
-  console.log(row);
 
-  console.log(columns);
-  // for (var i = 0; i < rows.length; i++) {
-  //   for (var j = 0; j < listOfMonths.length; j++) {}
-  // }
+  const arrayBackgroundColor = [];
+  if (listOfTasOrPr[0] === "tas") {
+    for (let i = 0; i < list_bccr_bcm2_0.length; i++) {
+      if (list_bccr_bcm2_0[i] < -15) {
+        arrayBackgroundColor.push("#4f86f7");
+      }
+      if (list_bccr_bcm2_0[i] < -10 && list_bccr_bcm2_0[i] >= -15) {
+        arrayBackgroundColor.push("#6495ed");
+      }
+      if (list_bccr_bcm2_0[i] < -5 && list_bccr_bcm2_0[i] >= -10) {
+        arrayBackgroundColor.push("#87ceeb");
+      }
+      if (list_bccr_bcm2_0[i] < 0 && list_bccr_bcm2_0[i] >= -5) {
+        arrayBackgroundColor.push("#ace5ee");
+      }
 
-  const useStyles = makeStyles((theme) => ({
-    root: {
-      // flexGrow: 1,
-      background: "#ffffe0",
-      fontFamily: "Calibri",
-      textAlign: "center",
-      border: 4,
-      borderRadius: 3,
-      justifyContent: "space-evenly",
-      fontSize: 16,
-      direction: "row",
-    },
-    control: {
-      padding: theme.spacing(2),
-    },
-  }));
-  // const
-  const classes = useStyles();
+      if (list_bccr_bcm2_0[i] >= 0 && list_bccr_bcm2_0[i] <= 5) {
+        arrayBackgroundColor.push("#feeaea");
+      }
+      if (list_bccr_bcm2_0[i] > 5 && list_bccr_bcm2_0[i] <= 10) {
+        arrayBackgroundColor.push("#fec0c0");
+      }
+      if (list_bccr_bcm2_0[i] > 10 && list_bccr_bcm2_0[i] <= 15) {
+        arrayBackgroundColor.push("#feabab");
+      }
+      if (list_bccr_bcm2_0[i] > 15 && list_bccr_bcm2_0[i] <= 20) {
+        arrayBackgroundColor.push("#fe8181");
+      }
+      if (list_bccr_bcm2_0[i] > 20 && list_bccr_bcm2_0[i] <= 25) {
+        arrayBackgroundColor.push("#fe5757");
+      }
+      if (list_bccr_bcm2_0[i] > 25 && list_bccr_bcm2_0[i] <= 30) {
+        arrayBackgroundColor.push("#fe2e2e");
+      }
+      if (list_bccr_bcm2_0[i] > 30 && list_bccr_bcm2_0[i] <= 35) {
+        arrayBackgroundColor.push("#cb2424");
+      }
+      if (list_bccr_bcm2_0[i] > 35 && list_bccr_bcm2_0[i] <= 40) {
+        arrayBackgroundColor.push("#b62020");
+      }
+    }
+  } else {
+    for (let i = 0; i < list_bccr_bcm2_0.length; i++) {
+      if (list_bccr_bcm2_0[i] > 230) {
+        arrayBackgroundColor.push("#006400");
+      }
+      if (list_bccr_bcm2_0[i] > 170 && list_bccr_bcm2_0[i] <= 230) {
+        arrayBackgroundColor.push("#008000");
+      }
+      if (list_bccr_bcm2_0[i] > 120 && list_bccr_bcm2_0[i] <= 170) {
+        arrayBackgroundColor.push("#2e8b57");
+      }
+      if (list_bccr_bcm2_0[i] > 80 && list_bccr_bcm2_0[i] <= 120) {
+        arrayBackgroundColor.push("#00a86b");
+      }
+      if (list_bccr_bcm2_0[i] > 50 && list_bccr_bcm2_0[i] <= 80) {
+        arrayBackgroundColor.push("#00cc99");
+      }
+      if (list_bccr_bcm2_0[i] > 30 && list_bccr_bcm2_0[i] <= 50) {
+        arrayBackgroundColor.push("#96c8a2");
+      }
+      if (list_bccr_bcm2_0[i] > 0 && list_bccr_bcm2_0[i] <= 35) {
+        arrayBackgroundColor.push("#a0d6b4");
+      }
+    }
+  }
+  let forTextPrecipitationTemp = "PRECIPITATION";
+
+  if (listOfTasOrPr[0] === "pr") {
+    forTextPrecipitationTemp = "PRECIPITATION";
+  } else {
+    forTextPrecipitationTemp = "TEMPERATURE";
+  }
+
+  console.log("arrayBackgroundColor");
+  console.log(arrayBackgroundColor);
+
+  console.log("rows[0]");
+  console.log(rows[0]);
+
+  console.log("first_row");
+  console.log(first_row);
+
+  console.log("list_bccr_bcm2_0");
+  console.log(list_bccr_bcm2_0);
+
+  const data = {
+    labels: monthsOrAnnual,
+    datasets: [
+      {
+        label: `${forTextPrecipitationTemp}`,
+        data: list_bccr_bcm2_0,
+        backgroundColor: arrayBackgroundColor,
+        borderColor: arrayBackgroundColor,
+        borderWidth: 1,
+      },
+    ],
+  };
+
   return (
-    // monthValuesArray,
-
     <>
-      <div style={{ height: 400, width: 1610 }}>
-        <Grid container>
-          {/* <Box border={1} /> */}
-          <DataGrid
-            fontFamily="Calibri"
-            item="true"
-            className={classes.root}
-            rows={row}
-            columns={columns}
-            autoHeight="true"
-            disableColumnFilter="true"
-            disableColumnMenu="true"
-            disableColumnSelector="true"
-            disableDensitySelector="true"
-            disableExtendRowFullWidth="true"
-            disableSelectionOnClick="true"
-            // pageSize={12}
-            // checkboxSelection
-            // disableSelectionOnClick
-          />
-          {/* <Box /> */}
-        </Grid>
+      <div className="header">
+        <div className="links"></div>
       </div>
+      <Grid container>
+        <Bar data={data} />{" "}
+      </Grid>
     </>
   );
 };
@@ -287,15 +214,10 @@ const App = () => {
   const [inputPeriod, setInputPeriod] = useState("");
   const [country, setCountry] = useState(allAppData.mapingCountries[179]);
   const [inputCountry, setInputCountry] = useState("");
-  // const [forTextPrecipitationTemp, setForTextPrecipitationTemp] =
-  //   useState("precipitation");
-  // const [forTextMonthlyOrAnnual, setForTextMonthlyOrAnnual] =
-  //   useState("monthly");
-
-  var forTextPrecipitationTemp = "";
-  var forTextMonthlyOrAnnual = "";
 
   let [startYear, endYear] = period.split(" - ");
+  let forTextPrecipitationTemp = "";
+  let forTextMonthlyOrAnnual = "";
 
   if (precipitationTemp === "pr") {
     forTextPrecipitationTemp = "precipitation";
@@ -345,48 +267,45 @@ const App = () => {
       : isoCode;
   };
 
-  // const allMonthsValues = [];
-
   const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
       justifyContent: "space-evenly",
       fontSize: 50,
+      background: "#FFFFF0",
     },
-
     titleText: {
       padding: theme.spacing(2),
+
       textAlign: "center",
       color: theme.palette.text.secondary,
-      background: "#fffff0",
+      background: "#FFFACD",
     },
     infoText: {
       padding: theme.spacing(2),
       textAlign: "center",
       color: theme.palette.text.secondary,
-      background: "#fffff0",
+      background: "#F5F5DC",
       fontSize: 22,
     },
     infoTextCurrent: {
       padding: theme.spacing(2),
       textAlign: "center",
       color: theme.palette.text.secondary,
-      background: "#ffffe0",
+      background: "#FFFFF0",
       fontSize: 22,
     },
 
     button: {
-      background: "#fffff0",
+      background: "#F5F5DC",
     },
     select: {
       color: theme.palette.text.secondary,
-      background: "#fffff0",
+      background: "#F5F5DC",
       fontFamily: "Calibri",
       closeIcon: "false",
     },
-    textField: {
-      fontFamily: "Calibri",
-    },
+
     option: {
       fontSize: 15,
       fontFamily: "Calibri",
@@ -395,24 +314,16 @@ const App = () => {
         fontSize: 18,
       },
     },
-    styleModelResults: {
-      // // background: "linear-gradient(45deg, #fffff0 30%, #ffffe0 90%)",
-      // // fontFamily: "Calibri",
-      // textAlign: "center",
-      // // border: 4,
-      // // borderRadius: 3,
-      // justifyContent: "space-evenly",
-    },
   }));
 
   {
     const classes = useStyles();
 
     return (
-      <div className={classes.root}>
+      <Container className={classes.root}>
         <Grid container spacing={3}>
-          <style>{"body { background-color: #ffffe0 ; }"}</style>
-          <Grid item sm={12}>
+          <style>{"body { background-color: #FFFFF0 ; }"}</style>
+          <Grid item xs={12} sm={12} md={12} lg={12}>
             <Paper className={classes.titleText}>Climate info App</Paper>
             <Paper className={classes.infoText}>
               Welcome to Climate info App
@@ -428,128 +339,186 @@ const App = () => {
               Now choose data you need and watch
             </Paper>
           </Grid>
-          <Grid item sm={12} container spacing={0} className={classes.root}>
-            <ToggleButtonGroup
-              value={precipitationTemp}
-              exclusive
-              onChange={handlePrecipitationTemp}
-              aria-label="text variable" // ??????
-            >
-              <ToggleButton
-                style={{ width: 200 }}
-                value="pr"
-                aria-label="left aligned"
-                className={classes.button}
-              >
-                <img src={rainLogo} alt="rainLogo" width="36" height="36" />
-                Precipitation
-              </ToggleButton>
-              <ToggleButton
-                style={{ width: 200 }}
-                value="tas"
-                aria-label="right aligned"
-                className={classes.button}
-              >
-                <img src={tempLogo} alt="tempLogo" width="36" height="36" />{" "}
-                Temperature
-              </ToggleButton>
-            </ToggleButtonGroup>
+        </Grid>
+        <div style={{ height: 30 }}></div>
 
-            <Autocomplete
-              className={classes.select}
-              disableClearable
-              value={country}
-              onChange={(event, newCountry) => {
-                setCountry(newCountry);
-              }}
-              inputValue={inputCountry}
-              onInputChange={(event, newInputCountry) => {
-                setInputCountry(newInputCountry);
-              }}
-              id="country-select"
-              style={{ width: 300 }}
-              options={allAppData.mapingCountries}
-              groupBy={(option) => option.firstLetter}
-              classes={{
-                option: classes.option,
-              }}
-              autoHighlight
-              getOptionLabel={(option) => option.label}
-              renderOption={(option) => (
-                <React.Fragment>
-                  <span>{countryToFlag(option.code)}</span>
-                  {option.label} ({option.code})
-                </React.Fragment>
-              )}
-              renderInput={(params) => (
-                <TextField
-                  className={classes.select}
-                  {...params}
-                  label="Select a country"
-                  variant="outlined"
-                  inputProps={{
-                    ...params.inputProps,
-                    autoComplete: "new-password",
-                  }}
-                />
-              )}
-            />
+        <Grid
+          container
+          spacing={3}
+          xs={12}
+          sm={12}
+          md={12}
+          lg={12}
+          alignItems="center"
+          justifyContent="center"
+        >
+          <Grid
+            container
+            spacing={3}
+            xs={12}
+            sm={12}
+            md={6}
+            lg={6}
+            direction="column"
+            alignItems="center"
+            justifyContent="center"
+          >
+            <Grid item xs={12} sm={12} md={6} lg={6} spacing={0}>
+              <ToggleButtonGroup
+                value={precipitationTemp}
+                exclusive
+                onChange={handlePrecipitationTemp}
+                aria-label="text variable"
+              >
+                <ToggleButton
+                  style={{ width: 200 }}
+                  value="pr"
+                  aria-label="left aligned"
+                  className={classes.button}
+                >
+                  <img src={rainLogo} alt="rainLogo" width="36" height="36" />
+                  Precipitation
+                </ToggleButton>
+                <ToggleButton
+                  style={{ width: 200 }}
+                  value="tas"
+                  aria-label="right aligned"
+                  className={classes.button}
+                >
+                  <img src={tempLogo} alt="tempLogo" width="36" height="36" />{" "}
+                  Temperature
+                </ToggleButton>
+              </ToggleButtonGroup>
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              md={6}
+              lg={6}
+              spacing={3}
+              className={classes.root}
+            >
+              <ToggleButtonGroup
+                value={monthlyOrAnnual}
+                exclusive
+                onChange={handleMonthlyOrAnnual}
+                aria-label="text monthlyOrAnnual"
+              >
+                <ToggleButton
+                  style={{ width: 200, height: 60 }}
+                  value="mavg"
+                  aria-label="left aligned"
+                  className={classes.button}
+                >
+                  <TodayIcon width="36" height="36" /> Monthly average
+                </ToggleButton>
+                <ToggleButton
+                  style={{ width: 200, height: 60 }}
+                  value="annualavg"
+                  aria-label="right aligned"
+                  className={classes.button}
+                >
+                  <CachedIcon width="36" height="36" /> Annual average
+                </ToggleButton>
+              </ToggleButtonGroup>
+            </Grid>
           </Grid>
+          <div style={{ height: 60 }}></div>
 
-          <Grid item sm={12} container spacing={0} className={classes.root}>
-            <ToggleButtonGroup
-              value={monthlyOrAnnual}
-              exclusive
-              onChange={handleMonthlyOrAnnual}
-              aria-label="text monthlyOrAnnual"
+          <Grid
+            container
+            spacing={3}
+            xs={6}
+            sm={6}
+            md={6}
+            lg={6}
+            direction="column"
+            alignItems="center"
+            justifyContent="center"
+          >
+            <Grid item xs={12} sm={12} md={6} lg={6} spacing={3}>
+              <Autocomplete
+                className={classes.select}
+                disableClearable
+                value={country}
+                onChange={(event, newCountry) => {
+                  setCountry(newCountry);
+                }}
+                inputValue={inputCountry}
+                onInputChange={(event, newInputCountry) => {
+                  setInputCountry(newInputCountry);
+                }}
+                id="country-select"
+                style={{ width: 300 }}
+                options={allAppData.mapingCountries}
+                groupBy={(option) => option.firstLetter}
+                classes={{
+                  option: classes.option,
+                }}
+                autoHighlight
+                getOptionLabel={(option) => option.label}
+                renderOption={(option) => (
+                  <React.Fragment>
+                    <span>{countryToFlag(option.code)}</span>
+                    {option.label} ({option.code})
+                  </React.Fragment>
+                )}
+                renderInput={(params) => (
+                  <TextField
+                    className={classes.select}
+                    {...params}
+                    label="Select a country"
+                    variant="outlined"
+                    inputProps={{
+                      ...params.inputProps,
+                      autoComplete: "new-password",
+                    }}
+                  />
+                )}
+              />
+            </Grid>
+
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              md={6}
+              lg={6}
+              spacing={3}
+              className={classes.root}
             >
-              <ToggleButton
-                style={{ width: 200 }}
-                value="mavg"
-                aria-label="left aligned"
-                className={classes.button}
-              >
-                <TodayIcon /> Monthly average
-              </ToggleButton>
-              <ToggleButton
-                style={{ width: 200 }}
-                value="annualavg"
-                aria-label="right aligned"
-                className={classes.button}
-              >
-                <CachedIcon /> Annual average
-              </ToggleButton>
-            </ToggleButtonGroup>
-
-            <Autocomplete
-              className={classes.select}
-              disableClearable
-              value={period}
-              onChange={(event, newPeriod) => {
-                setPeriod(newPeriod);
-              }}
-              inputValue={inputPeriod}
-              onInputChange={(event, newInputPeriod) => {
-                setInputPeriod(newInputPeriod);
-              }}
-              id="controllable-states-demo"
-              options={allAppData.period}
-              style={{ width: 300 }}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="Choose a period"
-                  variant="outlined"
-                />
-              )}
-            />
+              <Autocomplete
+                className={classes.select}
+                disableClearable
+                value={period}
+                onChange={(event, newPeriod) => {
+                  setPeriod(newPeriod);
+                }}
+                inputValue={inputPeriod}
+                onInputChange={(event, newInputPeriod) => {
+                  setInputPeriod(newInputPeriod);
+                }}
+                id="time"
+                options={allAppData.period}
+                style={{ width: 300, height: 60 }}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Choose a period"
+                    variant="outlined"
+                  />
+                )}
+              />
+            </Grid>
           </Grid>
         </Grid>
+
         <div style={{ height: 30 }}></div>
         <Grid>
           <Paper className={classes.infoTextCurrent} elevation={0}>
-            {country.label} {forTextMonthlyOrAnnual} {forTextPrecipitationTemp}{" "}
-            in {period}
+            {country.label}'s {forTextMonthlyOrAnnual}{" "}
+            {forTextPrecipitationTemp} in {period}
           </Paper>
         </Grid>
 
@@ -566,7 +535,7 @@ const App = () => {
             className={classes.styleModelResults}
           />
         </Grid>
-      </div>
+      </Container>
     );
   }
 };
