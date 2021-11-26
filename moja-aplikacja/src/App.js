@@ -9,7 +9,8 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import TextField from "@material-ui/core/TextField";
 import TodayIcon from "@material-ui/icons/Today";
 import CachedIcon from "@material-ui/icons/Cached";
-import { Bar } from "react-chartjs-2";
+import { Bar, CategoryScale } from "react-chartjs-2";
+import Chart from 'chart.js/auto'
 
 import rainLogo from "./rain.png";
 import tempLogo from "./temp.png";
