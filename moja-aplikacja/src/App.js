@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import _ from "lodash";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
@@ -10,7 +11,7 @@ import TextField from "@material-ui/core/TextField";
 import TodayIcon from "@material-ui/icons/Today";
 import CachedIcon from "@material-ui/icons/Cached";
 import { Bar, CategoryScale } from "react-chartjs-2";
-import Chart from 'chart.js/auto'
+import Chart from "chart.js/auto";
 
 import rainLogo from "./rain.png";
 import tempLogo from "./temp.png";
@@ -35,7 +36,6 @@ const ModelResults = (props) => {
     "December",
   ];
   const annualWord = ["Annual"];
-  const list_bccr_bcm2_0 = [];
   const listOfModels = [];
   const columns = [{ field: "model", headerName: "Model", width: 110 }];
   const row = [];
@@ -57,25 +57,31 @@ const ModelResults = (props) => {
 
     return rows;
   });
-  console.log(listOfTasOrPr[0]);
-  const first_row = [];
-  const allValues = [];
+
+  // console.log("listOfTasOrPr[0]");
+  // console.log(listOfTasOrPr[0]);
 
   if (lenghtOfMonthsOrAnnual === 12) {
     monthsOrAnnual = listOfMonths;
   } else {
     monthsOrAnnual = annualWord;
   }
+  // console.log("rows");
+  // console.log(rows);
 
-  for (let j = 0; j < rows.length; j++) {
-    for (let i = 0; i < monthsOrAnnual.length; i++) {
-      allValues.push(rows[j][i].toFixed(2));
-    }
-  }
+  const rowsFixed = _.map(rows, function (array) {
+    return _.map(array, function (item) {
+      return item.toFixed(2);
+    });
+  });
+  // console.log("rowsFixed");
+  // console.log(rowsFixed);
 
-  for (let i = 0; i < lenghtOfMonthsOrAnnual; i++) {
-    first_row.push(allValues[i]);
-  }
+  const list_bccr_bcm2_0 = _.map(rowsFixed[0], function (item) {
+    return item;
+  });
+  // console.log("list_bccr_bcm2_0");
+  // console.log(list_bccr_bcm2_0);
 
   columns.push({
     field: listOfModels[0],
@@ -83,10 +89,6 @@ const ModelResults = (props) => {
     width: 100,
     editable: true,
   });
-
-  for (let j = 0; j < first_row.length; j++) {
-    list_bccr_bcm2_0.push(first_row[j]);
-  }
 
   for (let i = 0; i < monthsOrAnnual.length; i++) {
     row.push({
@@ -96,72 +98,78 @@ const ModelResults = (props) => {
     });
   }
 
-  const arrayBackgroundColor = [];
+  // const arrayBackgroundColor = [];
+  // const arrayBackgroundColor_2 = [];
+
   if (listOfTasOrPr[0] === "tas") {
-    for (let i = 0; i < list_bccr_bcm2_0.length; i++) {
-      if (list_bccr_bcm2_0[i] < -15) {
-        arrayBackgroundColor.push("#4f86f7");
+    var arrayBackgroundColor = _.map(list_bccr_bcm2_0, function (value) {
+      if (value < -15) {
+        return "#4f86f7";
       }
-      if (list_bccr_bcm2_0[i] < -10 && list_bccr_bcm2_0[i] >= -15) {
-        arrayBackgroundColor.push("#6495ed");
+      if (value < -10 && value >= -15) {
+        return "#6495ed";
       }
-      if (list_bccr_bcm2_0[i] < -5 && list_bccr_bcm2_0[i] >= -10) {
-        arrayBackgroundColor.push("#87ceeb");
+      if (value < -5 && value >= -10) {
+        return "#87ceeb";
       }
-      if (list_bccr_bcm2_0[i] < 0 && list_bccr_bcm2_0[i] >= -5) {
-        arrayBackgroundColor.push("#ace5ee");
+      if (value < 0 && value >= -5) {
+        return "#ace5ee";
       }
 
-      if (list_bccr_bcm2_0[i] >= 0 && list_bccr_bcm2_0[i] <= 5) {
-        arrayBackgroundColor.push("#feeaea");
+      if (value >= 0 && value <= 5) {
+        return "#feeaea";
       }
-      if (list_bccr_bcm2_0[i] > 5 && list_bccr_bcm2_0[i] <= 10) {
-        arrayBackgroundColor.push("#fec0c0");
+      if (value > 5 && value <= 10) {
+        return "#fec0c0";
       }
-      if (list_bccr_bcm2_0[i] > 10 && list_bccr_bcm2_0[i] <= 15) {
-        arrayBackgroundColor.push("#feabab");
+      if (value > 10 && value <= 15) {
+        return "#feabab";
       }
-      if (list_bccr_bcm2_0[i] > 15 && list_bccr_bcm2_0[i] <= 20) {
-        arrayBackgroundColor.push("#fe8181");
+      if (value > 15 && value <= 20) {
+        return "#fe8181";
       }
-      if (list_bccr_bcm2_0[i] > 20 && list_bccr_bcm2_0[i] <= 25) {
-        arrayBackgroundColor.push("#fe5757");
+      if (value > 20 && value <= 25) {
+        return "#fe5757";
       }
-      if (list_bccr_bcm2_0[i] > 25 && list_bccr_bcm2_0[i] <= 30) {
-        arrayBackgroundColor.push("#fe2e2e");
+      if (value > 25 && value <= 30) {
+        return "#fe2e2e";
       }
-      if (list_bccr_bcm2_0[i] > 30 && list_bccr_bcm2_0[i] <= 35) {
-        arrayBackgroundColor.push("#cb2424");
+      if (value > 30 && value <= 35) {
+        return "#cb2424";
       }
-      if (list_bccr_bcm2_0[i] > 35 && list_bccr_bcm2_0[i] <= 40) {
-        arrayBackgroundColor.push("#b62020");
+      if (value > 35 && value <= 40) {
+        return "#b62020";
       }
-    }
+    });
   } else {
-    for (let i = 0; i < list_bccr_bcm2_0.length; i++) {
-      if (list_bccr_bcm2_0[i] > 230) {
-        arrayBackgroundColor.push("#006400");
+    var arrayBackgroundColor = _.map(list_bccr_bcm2_0, function (value) {
+      if (value > 230) {
+        return "#006400";
       }
-      if (list_bccr_bcm2_0[i] > 170 && list_bccr_bcm2_0[i] <= 230) {
-        arrayBackgroundColor.push("#008000");
+      if (value > 170 && value <= 230) {
+        return "#008000";
       }
-      if (list_bccr_bcm2_0[i] > 120 && list_bccr_bcm2_0[i] <= 170) {
-        arrayBackgroundColor.push("#2e8b57");
+      if (value > 120 && value <= 170) {
+        return "#2e8b57";
       }
-      if (list_bccr_bcm2_0[i] > 80 && list_bccr_bcm2_0[i] <= 120) {
-        arrayBackgroundColor.push("#00a86b");
+      if (value > 80 && value <= 120) {
+        return "#00a86b";
       }
-      if (list_bccr_bcm2_0[i] > 50 && list_bccr_bcm2_0[i] <= 80) {
-        arrayBackgroundColor.push("#00cc99");
+      if (value > 50 && value <= 80) {
+        return "#00cc99";
       }
-      if (list_bccr_bcm2_0[i] > 30 && list_bccr_bcm2_0[i] <= 50) {
-        arrayBackgroundColor.push("#96c8a2");
+      if (value > 30 && value <= 50) {
+        return "#96c8a2";
       }
-      if (list_bccr_bcm2_0[i] > 0 && list_bccr_bcm2_0[i] <= 35) {
-        arrayBackgroundColor.push("#a0d6b4");
+      if (value > 0 && value <= 35) {
+        return "#a0d6b4";
       }
-    }
+    });
   }
+
+  // console.log("arrayBackgroundColor_2");
+  // console.log(arrayBackgroundColor_2);
+
   let forTextPrecipitationTemp = "PRECIPITATION";
 
   if (listOfTasOrPr[0] === "pr") {
@@ -172,12 +180,6 @@ const ModelResults = (props) => {
 
   console.log("arrayBackgroundColor");
   console.log(arrayBackgroundColor);
-
-  console.log("rows[0]");
-  console.log(rows[0]);
-
-  console.log("first_row");
-  console.log(first_row);
 
   console.log("list_bccr_bcm2_0");
   console.log(list_bccr_bcm2_0);
