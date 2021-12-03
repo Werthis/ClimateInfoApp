@@ -298,7 +298,6 @@ const App = () => {
       background: "#FFFFF0",
       fontSize: 22,
     },
-
     button: {
       background: "#F5F5DC",
     },
@@ -308,7 +307,6 @@ const App = () => {
       fontFamily: "Calibri",
       closeIcon: "false",
     },
-
     option: {
       fontSize: 15,
       fontFamily: "Calibri",
