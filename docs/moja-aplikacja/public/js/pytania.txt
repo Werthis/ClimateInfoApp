@@ -1,0 +1,3 @@
+Jak zrobić return wartości 1920-1939, typu, var itp?
+
+Czy dodawanie watości do stringu URL jest ok?
