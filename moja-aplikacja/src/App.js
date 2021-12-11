@@ -74,6 +74,7 @@ const ModelResults = (props) => {
       return item.toFixed(2);
     });
   });
+  
   // console.log("rowsFixed");
   // console.log(rowsFixed);
 
@@ -89,6 +90,8 @@ const ModelResults = (props) => {
     width: 100,
     editable: true,
   });
+
+  // TODO FOR!!!!!!!!!!!!!!!!!!!!!!!!!!
 
   for (let i = 0; i < monthsOrAnnual.length; i++) {
     row.push({
