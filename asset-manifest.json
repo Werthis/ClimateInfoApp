@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/ClimateInfoApp/static/css/main.6dea0f05.chunk.css",
+    "main.js": "/ClimateInfoApp/static/js/main.111ae1b0.chunk.js",
+    "main.js.map": "/ClimateInfoApp/static/js/main.111ae1b0.chunk.js.map",
+    "runtime-main.js": "/ClimateInfoApp/static/js/runtime-main.f04091b3.js",
+    "runtime-main.js.map": "/ClimateInfoApp/static/js/runtime-main.f04091b3.js.map",
+    "static/js/2.b11e7797.chunk.js": "/ClimateInfoApp/static/js/2.b11e7797.chunk.js",
+    "static/js/2.b11e7797.chunk.js.map": "/ClimateInfoApp/static/js/2.b11e7797.chunk.js.map",
+    "static/js/3.30f5c2da.chunk.js": "/ClimateInfoApp/static/js/3.30f5c2da.chunk.js",
+    "static/js/3.30f5c2da.chunk.js.map": "/ClimateInfoApp/static/js/3.30f5c2da.chunk.js.map",
+    "index.html": "/ClimateInfoApp/index.html",
+    "static/css/main.6dea0f05.chunk.css.map": "/ClimateInfoApp/static/css/main.6dea0f05.chunk.css.map",
+    "static/js/2.b11e7797.chunk.js.LICENSE.txt": "/ClimateInfoApp/static/js/2.b11e7797.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.f04091b3.js",
+    "static/js/2.b11e7797.chunk.js",
+    "static/css/main.6dea0f05.chunk.css",
+    "static/js/main.111ae1b0.chunk.js"
+  ]
+}
